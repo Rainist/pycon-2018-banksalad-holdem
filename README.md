@@ -20,32 +20,11 @@
 - 5명의 플레이어가 하나의 게임에 참여하여 플레이하게 되며, 2명의 플레이어가 남거나 100라운드가 끝났을 경우 한 게임이 끝나게 됩니다.
 - 본 게임은 해커톤 품질의 코드로 만들어져 행사 동안 수시로 패치가 올라올 수 있습니다. 때때로 변경사항이 있는지 확인 부탁드립니다.
 
-## Prize
-
-<p align="center">
-  <img src="./resources/ipad-pro.png" alt="ipad" width="256px" />
-</p>
-<h3 align="center">1등 / iPad Pro 10.5"</h3>
-
-<p align="center">
-  <img src="./resources/airpods.png" alt="ipad" width="154px" />
-</p>
-<p align="center">2등 / AirPods</p>
-
-<p align="center">3등 / Starbucks 상품권</p>
-
-최종 우승자를 가리는 결승전과 시상식은 8월 19일 오후 5시에 OST 룸에서 진행될 예정입니다. 상품 수령을 위해 **반드시 시상식에 참여 부탁드립니다.**
-
-## Submission
-
-- **2018년 8월 19일 일요일 오후 4시까지** 제출된 코드에 대해서만 참여자격이 부여됩니다.
-- 작성하신 코드를 [GitHub Gist](https://gist.github.com/)에 업로드 하신 후, [여기](https://goo.gl/forms/v4Nup2q7kgBlmmUh1)에 업로드된 Gist 링크를 제출해주세요.
-
 ## How to Play
 
 ### Code
 
-[turn.py](holdem/turn.py) 의 `bet(...)` 함수를 구현해주세요. 구현된 코드([turn.py](holdem/turn.py))를 [GitHub Gist](https://gist.github.com/)에 업로드 하신 후, [여기](https://goo.gl/forms/v4Nup2q7kgBlmmUh1)에 업로드된 Gist 링크를 제출해주세요.
+[turn.py](holdem/turn.py) 의 `bet(...)` 함수를 구현하신 후, 프로그램을 실행해볼 수 있습니다.
 
 ```python
 def bet(
@@ -95,7 +74,9 @@ def always_bet(
 
 ### Run
 
-작성하신 코드를 테스트해보기 위해, 직접 프로그램을 실행해볼 수 있습니다. [__main__.py](holdem/__main__.py)의 하단 실행부 코드를 변경하여, 다양한 환경에서 실험해보실 수 있습니다.
+> 뱅크샐러드 홀덤은 Python3.7 이상의 버전과 UNIX 환경만 지원합니다. 해당 환경에서 진행이 어려우신 분은 Docker를 이용하여 진행 부탁드립니다.
+
+작성하신 코드를 테스트해보기 위해, 직접 프로그램을 실행해볼 수 있습니다. [\_\_main\_\_.py](holdem/__main__.py)의 하단 실행부 코드를 변경하여, 다양한 환경에서 실험해보실 수 있습니다.
 
 ```bash
 python3 -m holdem
@@ -108,6 +89,28 @@ docker-compose run holdem
 ```
 
 > 게임이 실행 후 생성된 `play.log` 파일을 [뱅크샐러드 카지노](https://casino.pycon2018.banksalad.com)에 업로드하시면 게임이 진행된 과정을 눈으로 확인하실 수 있습니다!
+
+
+## Submission
+
+- **2018년 8월 19일 일요일 오후 4시까지** 제출된 코드에 대해서만 참여자격이 부여됩니다.
+- 작성하신 코드([turn.py](holdem/turn.py))를 [GitHub Gist](https://gist.github.com/)에 업로드 하신 후, 업로드된 Gist 링크를 [여기](https://goo.gl/forms/v4Nup2q7kgBlmmUh1)를 통해 제출해주세요.
+
+## Prize
+
+<p align="center">
+  <img src="./resources/ipad-pro.png" alt="ipad" width="256px" />
+</p>
+<h3 align="center">1등 / iPad Pro 10.5"</h3>
+
+<p align="center">
+  <img src="./resources/airpods.png" alt="ipad" width="154px" />
+</p>
+<p align="center">2등 / AirPods</p>
+
+<p align="center">3등 / Starbucks 상품권</p>
+
+최종 우승자를 가리는 결승전과 시상식은 8월 19일 오후 5시에 OST 룸에서 진행될 예정입니다. 상품 수령을 위해 **반드시 시상식에 참여 부탁드립니다.**
 
 -----
 
