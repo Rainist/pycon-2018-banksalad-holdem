@@ -51,10 +51,12 @@
 2. 3장의 커뮤니티 카드가 오픈되고 베팅을 합니다.
 3. 1장의 턴 카드가 오픈되고 베팅을 합니다.
 4. 1장의 리버 카드가 오픈되고 베팅을 합니다.
-5. 남은 플레이어가 공통으로 오픈된 5장의 카드와 손 패를 비교하여 순위를 매깁니다.
+5. 남은 플레이어가 공통으로 오픈된 5장의 카드와 2장의 손 패를 비교하여 순위를 매깁니다.
 
 ### 용어
-
+- 콜(Call): 앞의 플레이어가 판돈을 올린 것을 받아들인다는 의미입니다.
+- 레이즈(Raise): 앞의 플레이어가 판돈을 올린 것을 받아들이되, 추가로 베팅을 하는 것을 의미합니다. 
+- 폴드(fold) : 게임을 포기합니다. 다이(die)라고도 합니다.
 - 핸드(hands) : 플레이어의 손에 있는 2장의 카드
 - 커뮤니티 카드(community cards) : 공통으로 열리는 맨 처음의 3장의 카드
 - 턴 카드(turn card) : 2번째로 열리는 1장의 카드
@@ -114,7 +116,7 @@
 <br><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h10.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/s10.png" width="15%"></img><br>
 <img src="https://cdn.banksalad.com/pycon2018/casino/cards/c2.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/d2.png" width="15%"></img>
 
-#### 탑
+#### 하이카드
 
 <br><img src="https://cdn.banksalad.com/pycon2018/casino/cards/c1.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h4.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h7.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/s9.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h11.png" width="15%"></img>
 
