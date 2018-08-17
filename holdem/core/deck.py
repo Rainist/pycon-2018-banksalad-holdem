@@ -16,7 +16,6 @@ def init() -> Deck:
     return Deck(
         [
             Card(r, s) for r, s in itertools.product(Rank, Suit)
-            if r != Rank.one_ace
         ],
         []
     )

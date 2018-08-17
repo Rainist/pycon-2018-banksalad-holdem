@@ -37,11 +37,11 @@ def _is_same_suit(cards: List[Card]) -> bool:
 
 
 def _get_straight_cards(cards: List[Card]) -> List[Card]:
-    circulated_cards = [Card(Rank.one_ace, cards[-1].suit)] + cards \
+    circulated_cards = [Card(1, cards[-1].suit)] + cards \
         if cards[-1].rank == Rank.ace else cards
 
     for i in range(0, 4):
-        card_slice = circulated_cards[-1 - i: -6 - i: -1]
+        card_slice = circulated_cards[-1-i:-6-i:-1]
         if all(
             x.rank - y.rank == 1 for x, y in zip(card_slice, card_slice[1:])
         ) and len(card_slice) == 5:
@@ -55,7 +55,7 @@ def _get_flush_cards(cards: List[Card]) -> List[Card]:
     for suit in Suit:
         if card_suits.count(suit) >= 5:
             return sorted(
-                [card for card in cards if card.suit == suit],
+                (c for c in cards if c.suit == suit),
                 key=_get_card_rank
             )[:5]
 
@@ -63,16 +63,16 @@ def _get_flush_cards(cards: List[Card]) -> List[Card]:
 
 
 def evaluate(
-    user_cards: List[Card], community_cards: List[Card]
+    player_cards: List[Card], community_cards: List[Card]
 ) -> Tuple[MadeHands, Rank]:
     hand_cards = sorted(
-        (user_cards + community_cards),
+        (player_cards + community_cards),
         key=_get_tuple_of_card_rank_and_suit
     )
 
-    rank_grouped_cards = sorted([
+    rank_grouped_cards = sorted((
         list(v) for _, v in groupby(hand_cards, key=_get_card_rank)
-    ], key=len)
+    ), key=len)
 
     card_pairs = {
         k: list(chain.from_iterable(list(v)))
