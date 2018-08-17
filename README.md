@@ -5,7 +5,9 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-Rainist-blue.svg" alt="love" />
+  <a href="https://rainist.com/recruit">
+    <img src="https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-Rainist-blue.svg" alt="love" />
+  </a>
 </p>
 
 - 뱅크샐러드 홀덤
