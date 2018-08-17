@@ -355,10 +355,14 @@ def players_bet(g: Game) -> Game:
 
 
 if __name__ == '__main__':
-    from . import example
+    from . import example, turn
 
     main(
         [
+            MetaPlayer(
+                'Me',
+                turn.bet
+            ),
             MetaPlayer(
                 'A',
                 example.always_bet
@@ -373,10 +377,6 @@ if __name__ == '__main__':
             ),
             MetaPlayer(
                 'D',
-                example.always_bet
-            ),
-            MetaPlayer(
-                'E',
                 example.always_bet
             )
         ]
