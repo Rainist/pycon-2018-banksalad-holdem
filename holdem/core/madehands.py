@@ -38,23 +38,26 @@ def _is_straight(cards: List[Card]) -> bool:
 
     for i in range(0, 4):
         card_slice = cards[i + 5 : i : -1]
-        if all(x - y == 1 for x, y in zip(card_slice, card_slice[1:])):
+        if all(x.rank - y.rank == 1 for x, y in zip(card_slice, card_slice[1:])):
             return True
 
     return False
 
 
 def evaluate(user_cards: List[Card], community_cards: List[Card]) -> Tuple[MadeHands, int]:
-    cards = (user_cards + community_cards).sort(key=lambda card: (card.rank, card.suit))
+    cards = (user_cards + community_cards)
+    cards.sort(key=lambda card: (card.rank, card.suit))
 
     rank_grouped_cards = [list(v) for _, v in groupby(cards, key=lambda c: c.rank)]
     rank_grouped_cards = {
-        k : chain.from_iterable(list(v)).sort(key=lambda card: card.rank)
-        for k, v in groupby(rank_grouped_cards, key=lambda cs: len(cs.values()))
+        #flatten = list(chain.from_iterable(list(v)))
+        #flatten.sort(key=lambda card: card.rank)
+        k : list(chain.from_iterable(list(v)))
+        for k, v in groupby(rank_grouped_cards, key=lambda cs: len(cs))
     }
 
     suit_grouped_cards = [
-        list(v).sort(key=lambda card: card.rank)
+        list(v)#.sort(key=lambda card: card.rank)
         for _, v in groupby(cards, key=lambda c: c.suit)
     ]
     suit_grouped_cards = {
@@ -67,22 +70,22 @@ def evaluate(user_cards: List[Card], community_cards: List[Card]) -> Tuple[MadeH
             MadeHands.royal_flush,
             rsfcs[-1].suit
         )
-    elif suit_grouped_cards[5] and _is_straight(suit_grouped_cards[5]):
+    elif 5 in suit_grouped_cards and suit_grouped_cards[5] and _is_straight(suit_grouped_cards[5]):
         return (
             MadeHands.straight_flush,
             suit_grouped_cards[5][-1].rank
         )
-    elif rank_grouped_cards[4]:
+    elif 4 in rank_grouped_cards and rank_grouped_cards[4]:
         return (
             MadeHands.four_of_a_kind,
             rank_grouped_cards[4][-1].rank
         )
-    elif rank_grouped_cards[2] and rank_grouped_cards[3]:
+    elif 2 in rank_grouped_cards and 3 in rank_grouped_cards and rank_grouped_cards[2] and rank_grouped_cards[3]:
         return (
             MadeHands.full_house,
             rank_grouped_cards[3][-1].rank
         )
-    elif _is_same_suit(suit_grouped_cards[5]):
+    elif 5 in suit_grouped_cards and _is_same_suit(suit_grouped_cards[5]):
         return (
             MadeHands.flush,
             suit_grouped_cards[-1].rank
@@ -92,11 +95,11 @@ def evaluate(user_cards: List[Card], community_cards: List[Card]) -> Tuple[MadeH
             MadeHands.straight,
             Rank.ace if (cards[0].rank == Rank.ace) else cards[-1].rank
         )
-    elif rank_grouped_cards[3]:
+    elif 3 in rank_grouped_cards and rank_grouped_cards[3]:
         return (MadeHands.three_of_kind, rank_grouped_cards[3][-1].rank)
-    elif len(rank_grouped_cards[2]) == 4:
+    elif 2 in rank_grouped_cards and len(rank_grouped_cards[2]) == 4:
         return (MadeHands.two_pairs, rank_grouped_cards[2][-1].rank)
-    elif rank_grouped_cards[2]:
+    elif 2 in rank_grouped_cards and rank_grouped_cards[2]:
         return (MadeHands.pair, rank_grouped_cards[2][-1].rank)
     else:
         return (MadeHands.high_card, _get_high_card_weight(user_cards))
