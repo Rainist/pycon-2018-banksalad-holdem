@@ -1,7 +1,11 @@
-# Pycon 2018 Banksalad Holdem
+<h1 align="center">Pycon 2018 X Banksalad Holdem</h1>
 
 <p align="center">
   <img src="./resources/banksalad-holdem.png" alt="banksalad-hold'em" width="384px" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-Rainist-blue.svg" alt="love" />
 </p>
 
 - 뱅크샐러드 홀덤
