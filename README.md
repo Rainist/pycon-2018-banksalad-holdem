@@ -43,28 +43,17 @@
 
 ```python
 def bet(
-    my_chips: int,
-    my_cards: List[Card],
-    bet_players: List[Other],
-    betting_players: List[Other],
-    community_cards: List[Card],
-    min_bet_amt: int,
-    max_bet_amt: int,
-    total_bet_amt: int
+    my_chips: int, # 남은 칩 수
+    my_cards: List[Card], # 플래이어의 손 패 (2장)
+    bet_players: List[Other], # 이번 턴에 배팅한 플레이어들
+    betting_players: List[Other], # 아직 배팅하지 않은 플레이어들
+    community_cards: List[Card], # 커뮤니티 카드 + 턴 카드 + 리버 카드 (3장 ~ 5장)
+    min_bet_amt: int, # 가능한 최소 배팅액
+    max_bet_amt: int, # 가능한 최대 배팅액
+    total_bet_amt: int # 여태까지 배팅한 누적 금액
 ) -> int:
     pass
 ```
-
-### Parameters
-
-- my_chips: 남은 칩 수
-- my_cards: 플래이어의 손 패 (2장)
-- bet_players: 이번 턴에 배팅한 플레이어들
-- betting_players: 아직 배팅하지 않은 플레이어들
-- community_cards: 커뮤니티 카드 + 턴 카드 + 리버 카드 (3장~5장)
-- min_bet_amt: 가능한 최소 배팅액
-- max_bet_amt: 가능한 최대 배팅액
-- total_bet_amt: 여태까지 배팅한 누적 금액
 
 ### Return
 
@@ -89,6 +78,8 @@ docker-compose run holdem
 
 작성한 코드를 테스트 하려면, `__main__.py` 에서 `example.always_bet` 대신 `turn.py` 의 `bet` 함수를 `import` 하고 테스트하실 수 있습니다.
 
+-----
+
 ## Rule
 
 ### 게임의 진행
@@ -108,7 +99,7 @@ docker-compose run holdem
 
 ### 용어
 - 콜(call): 앞 순서의 플레이어가 판돈을 올린 것을 받아들인다는 의미입니다.
-- 레이즈(raise): 앞 순서의 플레이어가 판돈을 올린 것을 받아들이되, 추가로 베팅을 하는 것을 의미합니다. 
+- 레이즈(raise): 앞 순서의 플레이어가 판돈을 올린 것을 받아들이되, 추가로 베팅을 하는 것을 의미합니다.
 - 폴드(fold) : 해당 라운드를 포기합니다. 다이(die)라고도 합니다.
 - 핸드(hands) : 플레이어의 손에 있는 2장의 카드
 - 플랍(flop) : 처음으로 열리는 3장의 카드
