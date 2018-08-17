@@ -1,5 +1,9 @@
 # Pycon 2018 Banksalad Holdem
 
+<p align="center">
+  <img src="./resources/banksalad-holdem.png" alt="banksalad-hold'em" width="384px" />
+</p>
+
 - 뱅크샐러드 홀덤
     + 뱅크샐러드 홀덤은 기존의 텍사스 홀덤에서 몇가지 규칙을 변경하여 구현되었습니다.
     + 5명의 플레이어가 하나의 게임에 참여하여 플레이 하게 되며, 2명의 플레이어가 남거나 100라운드가 끝났을 경우 한 경기가 끝나게 됩니다. (경기 종료 규칙 TBD)
