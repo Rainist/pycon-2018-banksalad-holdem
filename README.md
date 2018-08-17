@@ -126,9 +126,9 @@
 
 ## How to play
 
-`example.py` 의 `always_bet(...)` 함수를 참고하여 `turn.py` 의 `bet(...)` 함수를 수정하여 Pull Request 를 보내시면 됩니다.
+`example.py` 의 `always_bet(...)` 함수를 참고하여 `turn.py` 의 `bet(...)` 함수를 작성하신 코드를 [GitHub Gist](https://gist.github.com/)에 업로드 하신 후, [여기](https://goo.gl/forms/v4Nup2q7kgBlmmUh1)에 업로드 된 Gist 링크를 제출해주세요.
 
-```
+```python
 def bet(
     my_chips: int,
     my_cards: List[Card],
@@ -142,8 +142,6 @@ def bet(
     pass
 ```
 
-`0`을 `return` 하게 되면 해당 턴은 포기(`die`)한다는 의미입니다.
-
 ### Parameters
 
 - my_chips: 남은 칩 수
@@ -155,9 +153,26 @@ def bet(
 - max_bet_amt: 가능한 최대 배팅액
 - total_bet_amt: 여태까지 배팅한 누적 금액
 
+### Return
+
+- 베팅할 Amount (Int)
+  - `0`을 `return` 하게 되면 해당 턴은 포기(`die`)한다는 의미입니다.
+
 ### Test
 
-작성한 코드를 테스트 하려면, `__main__.py` 에서 `example.always_bet` 대신 `turn.py` 의 `bet` 함수를 `import` 하고 테스트 해보시면 됩니다
+작성한 코드를 테스트 하려면, `__main__.py` 에서 `example.always_bet` 대신 `turn.py` 의 `bet` 함수를 `import` 하고 테스트하실 수 있습니다.
+
+### Run
+
+```bash
+python3 -m holdem
+```
+
+UNIX 이외의 환경에서는 제약이 있을 수 있기 때문에, UNIX 이외의 환경에서는 **Docker**를 활용해주세요.
+
+```bash
+docker-compose run holdem
+```
 
 ## Questions?
 
