@@ -6,7 +6,6 @@ from .core.game import Game
 
 
 logging.basicConfig(
-    format='%(message)s',
     filename='play.log',
     filemode='w',
     level=logging.INFO
@@ -32,3 +31,7 @@ def log(g: Game):
             } for p in g.players
         ]
     }))
+
+
+def error(msg: str):
+    logging.error(msg)

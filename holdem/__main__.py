@@ -3,7 +3,7 @@ import random
 from operator import itemgetter
 from typing import List, Tuple
 
-from .logger import log
+from .logger import error, log
 from .player import Me, Other
 from .core.deck import Deck, draw, flop, init, shuffle
 from .core.game import ActivePlayer, Game, GameState, Player, PlayerGameStatus
@@ -23,7 +23,7 @@ PROCESS = [
     GameState.bet
 ]
 
-STARTING_CHIPS, MIN_BET_AMT = 200, 5
+STARTING_CHIPS, MIN_BET_AMT = 200, 1
 
 MIN_NR_OF_WINNERS = 2
 MAX_NR_OF_TURNS = 100
@@ -187,7 +187,7 @@ def players_bet(g: Game) -> Game:
             )
 
             try:
-                assert bet_amt > 0 and bet_amt >= min_bet_amt
+                assert max_bet_amt >= bet_amt >= min_bet_amt
 
                 if bet_amt == min_bet_amt:
                     return _bet(
@@ -226,6 +226,10 @@ def players_bet(g: Game) -> Game:
                         ]
                     )
             except AssertionError:
+                error(
+                    f'{p.player.meta.name} tried to bet {bet_amt} chips. '
+                    f'(min: {min_bet_amt}, max: {max_bet_amt})'
+                )
                 return _bet(
                     last_bet_amt,
                     ps[1:],
@@ -262,4 +266,33 @@ def players_bet(g: Game) -> Game:
         g.deck,
         bet_players,
         g.acc_chips + sum(p.status.bet_amt for p in bet_players)
+    )
+
+
+if __name__ == '__main__':
+    from . import example
+
+    main(
+        [
+            MetaPlayer(
+                'A',
+                example.always_bet
+            ),
+            MetaPlayer(
+                'B',
+                example.always_bet
+            ),
+            MetaPlayer(
+                'C',
+                example.always_bet
+            ),
+            MetaPlayer(
+                'D',
+                example.always_bet
+            ),
+            MetaPlayer(
+                'E',
+                example.always_bet
+            )
+        ]
     )
