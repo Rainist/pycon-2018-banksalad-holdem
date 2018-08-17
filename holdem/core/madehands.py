@@ -71,18 +71,22 @@ def evaluate(user_cards: List[Card], community_cards: List[Card]) -> Tuple[MadeH
     }
 
     rank_grouped_cards = [list(v) for _, v in groupby(cards, key=lambda c: c.rank)]
-    rank_grouped_cards = default_grouped_cards.update({
-        #flatten = list(chain.from_iterable(list(v)))
-        #flatten.sort(key=lambda card: card.rank)
+    rank_grouped_cards.sort(key=lambda cs: len(cs))
+    default_grouped_cards.update({
+        # flatten = list(chain.from_iterable(list(v)))
+        # flatten.sort(key=lambda card: card.rank)
         k: list(chain.from_iterable(list(v)))
         for k, v in groupby(rank_grouped_cards, key=lambda cs: len(cs))
     })
+    rank_grouped_cards = default_grouped_cards
 
     rsfcs = cards[2:]
 
     straight_mate = _get_straight_cards(cards)
     flush_mate = _get_flush_cards(cards)
     straight_flush_mate = _get_flush_cards(straight_mate)
+
+    print(rank_grouped_cards[2])
     if map(lambda c: c.rank, rsfcs) == STRAIGHT_FLUSH_RANKS and _is_same_suit(rsfcs):
         return (
             MadeHands.royal_flush,
