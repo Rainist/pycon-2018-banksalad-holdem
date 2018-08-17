@@ -82,7 +82,22 @@ def run(t: int, players: List[Player]) -> List[Player]:
             if curr == GameState.flop:
                 d = flop(g.deck)
 
-                g = Game(g.round, d, g.players, g.acc_chips); log(g)
+                g = Game(
+                    g.round,
+                    d,
+                    [
+                        ActivePlayer(
+                            p.player,
+                            PlayerGameStatus(
+                                p.status.cards,
+                                0,
+                                False
+                            )
+                        ) for p in g.players
+                    ],
+                    g.acc_chips
+                ); log(g)
+
                 return _run(g, process[1:])
             elif curr == GameState.bet:
                 g = players_bet(g); log(g)
