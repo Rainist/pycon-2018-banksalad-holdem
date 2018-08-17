@@ -34,7 +34,7 @@ class TestMadeHands(unittest.TestCase):
                 [
                     Card(Rank.jack, Suit.heart),
                     Card(Rank.four, Suit.spade),
-                    Card(Rank.three, Suit.heart),
+                    Card(Rank.eight, Suit.heart),
                     Card(Rank.five, Suit.spade),
                     Card(Rank.six, Suit.heart)
                 ]
