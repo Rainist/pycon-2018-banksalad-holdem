@@ -1,11 +1,12 @@
 from typing import List
 
 from .core.cards import Card
-from .player import Me, Other
+from .player import Other
 
 
 def bet(
-    me: Me,
+    my_chips: int,
+    my_cards: List[Card],
     bet_players: List[Other],
     betting_players: List[Other],
     community_cards: List[Card],

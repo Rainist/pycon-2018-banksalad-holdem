@@ -31,6 +31,7 @@ class ActivePlayer:
 
 @dataclass
 class Game:
+    round: int
     deck: Deck
     players: List[ActivePlayer]
     acc_chips: int
