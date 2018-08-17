@@ -10,7 +10,6 @@ class Suit(IntEnum):
 
 
 class Rank(IntEnum):
-    one_ace = 1
     two = 2
     three = 3
     four = 4
