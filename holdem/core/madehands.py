@@ -34,7 +34,7 @@ def _is_straight(cards: List[Card]) -> bool:
     cards = cards[:]
 
     if cards[-1].rank == Rank.ace:
-        cards = [0] + cards
+        cards = [1] + cards
 
     for i in range(0, 4):
         card_slice = cards[i + 5 : i : -1]
