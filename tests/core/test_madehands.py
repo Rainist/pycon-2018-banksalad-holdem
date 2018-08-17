@@ -22,5 +22,5 @@ class TestMadeHands(unittest.TestCase):
                     Card(Rank.seven, Suit.heart)
                 ]
             ),
-            (MadeHands.straight_flush, Suit.heart)
+            (MadeHands.straight_flush, Rank.seven)
         )
