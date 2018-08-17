@@ -10,7 +10,6 @@ class Suit(IntEnum):
 
 
 class Rank(IntEnum):
-    ace = 1
     two = 2
     three = 3
     four = 4
@@ -23,6 +22,7 @@ class Rank(IntEnum):
     jack = 11
     queen = 12
     king = 13
+    ace = 14
 
 
 @dataclass(repr=False, frozen=True)

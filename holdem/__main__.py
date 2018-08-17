@@ -130,7 +130,10 @@ def run(t: int, players: List[Player]) -> List[Player]:
                     sorted(
                         (
                             (
-                                evaluate(p.status.cards + g.deck.community_cards),
+                                evaluate(
+                                    p.status.cards,
+                                    g.deck.community_cards
+                                ),
                                 p.player
                             ) for p in g.players if not p.status.died
                         ), key=itemgetter(0)
@@ -143,7 +146,9 @@ def run(t: int, players: List[Player]) -> List[Player]:
 
             died = [p.player for p in g.players if p.status.died]
 
-            lost_players: List[Player] = sum((x for x in left_players.values()), [])
+            lost_players: List[Player] = sum(
+                (x for x in left_players.values()), []
+            )
 
             return died + lost_players + [
                 Player(w.meta, w.chips + (g.acc_chips // len(winners)))
@@ -158,7 +163,9 @@ def run(t: int, players: List[Player]) -> List[Player]:
 
 def players_draw(g: Game) -> Game:
 
-    def _draw(d, ps: List[ActivePlayer], acc: List[ActivePlayer]) -> Tuple[Deck, List[ActivePlayer]]:
+    def _draw(
+        d, ps: List[ActivePlayer], acc: List[ActivePlayer]
+    ) -> Tuple[Deck, List[ActivePlayer]]:
         if ps:
             c, d2 = draw(d)
 
@@ -182,7 +189,9 @@ def players_draw(g: Game) -> Game:
 
 def players_bet(g: Game) -> Game:
 
-    def _bet(last_bet_amt: int, ps: List[ActivePlayer], acc: List[ActivePlayer]) -> List[ActivePlayer]:
+    def _bet(
+        last_bet_amt: int, ps: List[ActivePlayer], acc: List[ActivePlayer]
+    ) -> List[ActivePlayer]:
         if ps:
             p = ps[0]
             if p.status.died:
@@ -217,7 +226,9 @@ def players_bet(g: Game) -> Game:
                             g.deck.community_cards,
                             min_bet_amt,
                             max_bet_amt,
-                            g.acc_chips + sum(p.status.bet_amt for p in ps + acc)
+                            g.acc_chips + sum(
+                                p.status.bet_amt for p in ps + acc
+                            )
                         )
                     )
 
