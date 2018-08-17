@@ -167,26 +167,29 @@ def players_bet(g: Game) -> Game:
 
             try:
                 with Timeout(seconds=1):
-                    bet_amt = p.player.meta.bet(
-                        Me(p.player.chips, p.status.cards),
-                        [
-                            Other(
-                                p.player.chips,
-                                p.status.bet_amt,
-                                p.status.died
-                            ) for p in acc
-                        ],
-                        [
-                            Other(
-                                p.player.chips,
-                                p.status.bet_amt,
-                                p.status.died
-                            ) for p in ps[1:]
-                        ],
-                        g.deck.community_cards,
-                        min_bet_amt,
-                        max_bet_amt,
-                        g.acc_chips + sum(p.status.bet_amt for p in ps + acc)
+                    bet_amt = int(
+                        p.player.meta.bet(
+                            p.player.chips,
+                            p.status.cards,
+                            [
+                                Other(
+                                    p.player.chips,
+                                    p.status.bet_amt,
+                                    p.status.died
+                                ) for p in acc
+                            ],
+                            [
+                                Other(
+                                    p.player.chips,
+                                    p.status.bet_amt,
+                                    p.status.died
+                                ) for p in ps[1:]
+                            ],
+                            g.deck.community_cards,
+                            min_bet_amt,
+                            max_bet_amt,
+                            g.acc_chips + sum(p.status.bet_amt for p in ps + acc)
+                        )
                     )
 
                 assert max_bet_amt >= bet_amt >= min_bet_amt
