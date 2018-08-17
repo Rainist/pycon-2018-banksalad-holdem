@@ -84,7 +84,7 @@ def evaluate(
         k: list(chain.from_iterable(list(v)))
         for k, v in groupby(rank_grouped_cards, key=len)
     })
-    rank_grouped_cards = default_grouped_cards
+    card_pairs = default_grouped_cards
 
     highest_five_cards = cards[2:]
 
@@ -102,15 +102,15 @@ def evaluate(
             MadeHands.straight_flush,
             straight_flush_mate[-1].rank
         )
-    elif rank_grouped_cards[4]:
+    elif card_pairs[4]:
         return (
             MadeHands.four_of_a_kind,
-            rank_grouped_cards[4][-1].rank
+            card_pairs[4][-1].rank
         )
-    elif rank_grouped_cards[2] and rank_grouped_cards[3]:
+    elif card_pairs[2] and card_pairs[3]:
         return (
             MadeHands.full_house,
-            rank_grouped_cards[3][-1].rank
+            card_pairs[3][-1].rank
         )
     elif flush_mate:
         return (
@@ -122,11 +122,11 @@ def evaluate(
             MadeHands.straight,
             straight_mate[0].rank
         )
-    elif rank_grouped_cards[3]:
-        return MadeHands.three_of_kind, rank_grouped_cards[3][-1].rank
-    elif len(rank_grouped_cards[2]) >= 4:
-        return MadeHands.two_pairs, rank_grouped_cards[2][-1].rank
-    elif rank_grouped_cards[2]:
-        return MadeHands.pair, rank_grouped_cards[2][-1].rank
+    elif card_pairs[3]:
+        return MadeHands.three_of_kind, card_pairs[3][-1].rank
+    elif len(card_pairs[2]) >= 4:
+        return MadeHands.two_pairs, card_pairs[2][-1].rank
+    elif card_pairs[2]:
+        return MadeHands.pair, card_pairs[2][-1].rank
     else:
         return MadeHands.high_card, _get_high_card_weight(user_cards)
