@@ -4,7 +4,7 @@ from operator import itemgetter
 from typing import List, Tuple
 
 from .logger import error, log
-from .player import Me, Other
+from .player import Other
 from .timeout import Timeout
 from .core.deck import Deck, draw, flop, init, shuffle
 from .core.game import ActivePlayer, Game, GameState, Player, PlayerGameStatus
@@ -30,6 +30,10 @@ MIN_NR_OF_WINNERS = 2
 MAX_NR_OF_TURNS = 100
 
 
+def get_chip(player: Player):
+    return player.chips
+
+
 def main(players: List[MetaPlayer]):
     players = [
         Player(
@@ -38,24 +42,26 @@ def main(players: List[MetaPlayer]):
         ) for p in players
     ]
 
-    t = 0
+    t = 1
     while len(players) > MIN_NR_OF_WINNERS and t < MAX_NR_OF_TURNS:
+        players = run(t, players)
+        t += 1
+
         players = [p for p in players if p.chips > 0]
         random.shuffle(players)
 
-        players = run(players)
-        t += 1
-
     # TODO: ON GAME FINISHED
-    for p in players:
-        print(p.meta.name)
+    sorted_players = sorted(players, key=get_chip, reverse=True)
+    for p in sorted_players:
+        print(f'Player: {p.meta.name} Chips: {p.chips}')
 
 
-def run(players: List[Player]) -> List[Player]:
+def run(t: int, players: List[Player]) -> List[Player]:
     deck = init()
     deck = shuffle(deck)
 
     initial_game = Game(
+        t,
         deck,
         [
             ActivePlayer(
@@ -76,7 +82,22 @@ def run(players: List[Player]) -> List[Player]:
             if curr == GameState.flop:
                 d = flop(g.deck)
 
-                g = Game(d, g.players, g.acc_chips); log(g)
+                g = Game(
+                    g.round,
+                    d,
+                    [
+                        ActivePlayer(
+                            p.player,
+                            PlayerGameStatus(
+                                p.status.cards,
+                                0,
+                                False
+                            )
+                        ) for p in g.players
+                    ],
+                    g.acc_chips
+                ); log(g)
+
                 return _run(g, process[1:])
             elif curr == GameState.bet:
                 g = players_bet(g); log(g)
@@ -151,7 +172,7 @@ def players_draw(g: Game) -> Game:
             return d, acc
 
     deck, players = _draw(g.deck, g.players, [])
-    return Game(deck, players, g.acc_chips)
+    return Game(g.round, deck, players, g.acc_chips)
 
 
 def players_bet(g: Game) -> Game:
@@ -163,30 +184,33 @@ def players_bet(g: Game) -> Game:
                 return _bet(last_bet_amt, ps[1:], acc + [p])
 
             min_bet_amt = max(last_bet_amt, MIN_BET_AMT) - p.status.bet_amt
-            max_bet_amt = min(p.player.chips for p in ps + acc)
+            max_bet_amt = min(p.player.chips for p in ps + acc if not p.status.died)
 
             try:
                 with Timeout(seconds=1):
-                    bet_amt = p.player.meta.bet(
-                        Me(p.player.chips, p.status.cards),
-                        [
-                            Other(
-                                p.player.chips,
-                                p.status.bet_amt,
-                                p.status.died
-                            ) for p in acc
-                        ],
-                        [
-                            Other(
-                                p.player.chips,
-                                p.status.bet_amt,
-                                p.status.died
-                            ) for p in ps[1:]
-                        ],
-                        g.deck.community_cards,
-                        min_bet_amt,
-                        max_bet_amt,
-                        g.acc_chips + sum(p.status.bet_amt for p in ps + acc)
+                    bet_amt = int(
+                        p.player.meta.bet(
+                            p.player.chips,
+                            p.status.cards,
+                            [
+                                Other(
+                                    p.player.chips,
+                                    p.status.bet_amt,
+                                    p.status.died
+                                ) for p in acc
+                            ],
+                            [
+                                Other(
+                                    p.player.chips,
+                                    p.status.bet_amt,
+                                    p.status.died
+                                ) for p in ps[1:]
+                            ],
+                            g.deck.community_cards,
+                            min_bet_amt,
+                            max_bet_amt,
+                            g.acc_chips + sum(p.status.bet_amt for p in ps + acc)
+                        )
                     )
 
                 assert max_bet_amt >= bet_amt >= min_bet_amt
@@ -303,6 +327,7 @@ def players_bet(g: Game) -> Game:
     )
 
     return Game(
+        g.round,
         g.deck,
         bet_players,
         g.acc_chips + sum(p.status.bet_amt for p in bet_players)
