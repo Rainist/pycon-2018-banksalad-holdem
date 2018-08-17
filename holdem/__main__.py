@@ -44,9 +44,9 @@ def main(players: List[MetaPlayer]):
 
     t = 1
     while len(players) > MIN_NR_OF_WINNERS and t < MAX_NR_OF_TURNS:
+        print(t)
         for i in range(len(players)):
             players[i].chips -= RAKE
-
         players = run(t, players)
         t += 1
 
@@ -72,7 +72,8 @@ def run(t: int, players: List[Player]) -> List[Player]:
                 PlayerGameStatus([], 0, False)
             ) for p in players
         ],
-        0
+        0,
+        False
     )
 
     game = players_draw(initial_game); log(game)
@@ -98,11 +99,16 @@ def run(t: int, players: List[Player]) -> List[Player]:
                             )
                         ) for p in g.players
                     ],
-                    g.acc_chips
+                    g.acc_chips,
+                    g.is_all_in
                 ); log(g)
 
                 return _run(g, process[1:])
             elif curr == GameState.bet:
+                print(g.is_all_in) if g.is_all_in == True else print('',end='')
+                if g.is_all_in:
+                    return _run(g, process[1:])
+
                 g = players_bet(g); log(g)
 
                 left_players = [p for p in g.players if not p.status.died]
@@ -175,7 +181,7 @@ def players_draw(g: Game) -> Game:
             return d, acc
 
     deck, players = _draw(g.deck, g.players, [])
-    return Game(g.round, deck, players, g.acc_chips)
+    return Game(g.round, deck, players, g.acc_chips, g.is_all_in)
 
 
 def players_bet(g: Game) -> Game:
@@ -188,6 +194,9 @@ def players_bet(g: Game) -> Game:
 
             min_bet_amt = max(last_bet_amt, MIN_BET_AMT) - p.status.bet_amt
             max_bet_amt = min(p.player.chips for p in ps + acc if not p.status.died)
+
+            if min_bet_amt > max_bet_amt:
+                return _bet(last_bet_amt, ps[1:], acc + [p])
 
             try:
                 with Timeout(seconds=1):
@@ -333,7 +342,8 @@ def players_bet(g: Game) -> Game:
         g.round,
         g.deck,
         bet_players,
-        g.acc_chips + sum(p.status.bet_amt for p in bet_players)
+        g.acc_chips + sum(p.status.bet_amt for p in bet_players),
+        True if any(p.player.chips == 0 for p in bet_players) else False
     )
 
 
