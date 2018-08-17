@@ -74,7 +74,7 @@ def run(t: int, players: List[Player]) -> List[Player]:
         False
     )
 
-    game = players_draw(initial_game); log(game)
+    game = players_draw(initial_game)
     game = players_draw(game); log(game)
 
     def _run(g: Game, process: List[GameState]) -> List[Player]:
