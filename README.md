@@ -15,17 +15,10 @@
     + 5명의 플레이어가 하나의 게임에 참여하여 플레이 하게 되며, 2명의 플레이어가 남거나 100라운드가 끝났을 경우 한 경기가 끝나게 됩니다. (경기 종료 규칙 TBD)
 
 ## Rule
----
-### 용어
- - 핸드(hands) : 플레이어의 손 패
- - 커뮤니티 카드(community cards) : 공통으로 열리는 맨 처음의 3장의 카드
- - 턴 카드(turn card) : 2번째로 열리는 1장의 카드
- - 리버 카드(river card) : 마지막으로 열리는 1장의 카드
 
 ### 게임의 진행
  - 게임의 진행은 일반적인 텍사스 홀덤과 비슷합니다.
- - 뱅샐 홀덤에서 선 및 딜러버튼은 없으며, 매 라운드마다 랜덤으로 선정된 플레이어부터 게임을 시작하게 됩니다. (TBD)
- - SB 및 BB도 존재하지 않습니다. (TBD)
+ - 뱅샐 홀덤에서는 매 라운드마다 랜덤으로 선정된 플레이어부터 게임을 시작하게 됩니다.
 
  1. 게임에 참여한 플레이어는 2장의 카드를 받고 베팅을 합니다.
  2. 3장의 커뮤니티 카드가 오픈되고 베팅을 합니다.
@@ -35,30 +28,62 @@
 
 - 모든 사용자가 접을 경우 판돈은 사라집니다.
 
-### 뱅샐홀덤 족보
-    + 높은 순서대로 나열되어 있습니다.
-
->+ 로얄 스트레이트 플러시 (TBD)
->+ 백 스트레이트 플러시 (TBD)
->+ 스트레이트 플러시
->+ 포카드
->+ 풀하우스
->+ 플러시
->+ 마운틴 (TBD)
->+ 백 스트레이트 (TBD)
->+ 스트레이트
->+ 트리플
->+ 투 페어
->+ 원 페어
->+ 탑
-
-### 같은 족보일 경우의 판단
-- 스트레이트 이상의 족보에서는 일반적인 한국 룰인 스페이드 > 다이아 > 하트 > 클로버의 문양 순으로 높은 패로 인정됩니다.
-- 트리플 이하에서는 패가 만들어진 카드 중 가장 높은 숫자를 비교합니다.
+### 용어
+ - 핸드(hands) : 플레이어의 손에 있는 2장의 카드
+ - 커뮤니티 카드(community cards) : 공통으로 열리는 맨 처음의 3장의 카드
+ - 턴 카드(turn card) : 2번째로 열리는 1장의 카드
+ - 리버 카드(river card) : 마지막으로 열리는 1장의 카드
 
 ### 베팅 조건
 - 참여비 (TBD)
-- 최소 참여비 (TBD)
+- 최소 판돈 (TBD)
+- 뱅샐홀덤에는 자기 차례에 콜, 레이즈를 할 수 있으며 선으로 뽑힌 플레이어부터 판돈을 제시하고 다른 플레이어들에게 돌아가며 제시된 판돈에 대해 콜을 할지, 레이즈를 할지 정하게 됩니다.
+    + 콜을 할 경우 다른 플레이어로 순서가 넘어갑니다.
+    + 레이즈를 할 경우, 해당 플레이어를 기준으로 한바퀴를 다시 돌게 됩니다.
+- 올인 (TBD)
+
+### 뱅샐홀덤 족보
++ 높은 순서대로 나열되어 있습니다.
+
++ 로얄 플러시
+<br><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h10.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h11.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h12.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h13.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h1.png" width="15%"></img>
+
++ 스트레이트 플러시
+<br><img src="https://cdn.banksalad.com/pycon2018/casino/cards/c3.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/c4.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/c5.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/c6.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/c7.png" width="15%"></img>
+
++ 포카드
+<br><img src="https://cdn.banksalad.com/pycon2018/casino/cards/s9.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/d9.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h9.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/c9.png" width="15%"></img>
+
++ 풀하우스
+<br><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h2.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/s2.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h12.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/c12.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/d12.png" width="15%"></img>
+
++ 플러시
+<br><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h2.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h5.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h6.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h8.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h11.png" width="15%"></img>
+
++ 스트레이트
+<br><img src="https://cdn.banksalad.com/pycon2018/casino/cards/c7.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/c8.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h9.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/s10.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h11.png" width="15%"></img>
+
++ 트리플
+<br><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h3.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/s3.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/d3.png" width="15%"></img><br>
+<img src="https://cdn.banksalad.com/pycon2018/casino/cards/d13.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h13.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/s13.png" width="15%"></img>
+
++ 투 페어
+<br><img src="https://cdn.banksalad.com/pycon2018/casino/cards/s11.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h11.png" width="15%"></img>
+<img src="https://cdn.banksalad.com/pycon2018/casino/cards/c5.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/s5.png" width="15%"></img><br>
+<img src="https://cdn.banksalad.com/pycon2018/casino/cards/s1.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/c1.png" width="15%"></img>
+<img src="https://cdn.banksalad.com/pycon2018/casino/cards/h8.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/d8.png" width="15%"></img>
+
++ 원 페어
+<br><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h10.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/s10.png" width="15%"></img><br>
+<img src="https://cdn.banksalad.com/pycon2018/casino/cards/c2.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/d2.png" width="15%"></img>
+
++ 탑
+<br><img src="https://cdn.banksalad.com/pycon2018/casino/cards/c1.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h4.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h7.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/s9.png" width="15%"></img><img src="https://cdn.banksalad.com/pycon2018/casino/cards/h11.png" width="15%"></img>
+
+### 같은 족보일 경우의 판단
+- 로얄 스트레이트 플러시가 두개 이상 나왔을 경우에는 (거의 없는 확률....) 스페이드 > 다이아 > 하트 > 클로버의 문양 순으로 높은 패로 인정됩니다.
+- 로얄 스트레이트 플러시가 아닌 경우에는 패가 만들어진 카드 중 가장 높은 숫자만을 비교합니다.
+- 숫자를 비교하여 같은 숫자인경우, 그 판은 무효가 되며 판돈은 딜러가 가져갑니다.
 
 ---
 
