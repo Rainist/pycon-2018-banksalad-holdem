@@ -1,7 +1,6 @@
 from .cards import Card, Rank, Suit
-from collections import defaultdict
 from enum import IntEnum
-from typing import List, Optional, Tuple, Union
+from typing import List, Tuple
 from itertools import chain, groupby
 
 
@@ -22,7 +21,7 @@ class MadeHands(IntEnum):
 
 
 def _get_high_card_weight(cards: List[Card]) -> int:
-    return max(cards, key=lambda card: card.rank)
+    return max(cards, key=lambda card: card.rank).rank
 
 
 def _is_same_suit(cards: List[Card]) -> bool:
@@ -39,7 +38,9 @@ def _get_straight_cards(cards: List[Card]) -> List[Card]:
 
     for i in range(0, 4):
         card_slice = cards[-1 - i: -6 - i: -1]
-        if all(x.rank - y.rank == 1 for x, y in zip(card_slice, card_slice[1:])):
+        if all(
+            x.rank - y.rank == 1 for x, y in zip(card_slice, card_slice[1:])
+        ):
             return card_slice
 
     return []
@@ -53,24 +54,31 @@ def _get_flush_cards(cards: List[Card]) -> List[Card]:
     card_suits = [card.suit for card in cards]
     for suit in Suit:
         if card_suits.count(suit) >= 5:
-            return sorted([card for card in cards if card.suit == suit], key=_get_rank)[:5]
+            return sorted(
+                [card for card in cards if card.suit == suit],
+                key=_get_rank
+            )[:5]
 
     return []
 
 
-def evaluate(user_cards: List[Card], community_cards: List[Card]) -> Tuple[MadeHands, int]:
+def evaluate(
+    user_cards: List[Card], community_cards: List[Card]
+) -> Tuple[MadeHands, int]:
     cards = (user_cards + community_cards)
     cards.sort(key=lambda card: (card.rank, card.suit))
 
     default_grouped_cards = {
-        1: None,
-        2: None,
-        3: None,
-        4: None,
-        5: None
+        1: [],
+        2: [],
+        3: [],
+        4: [],
+        5: []
     }
 
-    rank_grouped_cards = [list(v) for _, v in groupby(cards, key=lambda c: c.rank)]
+    rank_grouped_cards = [
+        list(v) for _, v in groupby(cards, key=lambda c: c.rank)
+    ]
     rank_grouped_cards.sort(key=lambda cs: len(cs))
     default_grouped_cards.update({
         k: list(chain.from_iterable(list(v)))
