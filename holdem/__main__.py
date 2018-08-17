@@ -104,7 +104,7 @@ def run(players: List[Player]) -> List[Player]:
                     sorted(
                         (
                             (
-                                evaluate(p.status.cards + g.deck.community_cards),
+                                evaluate(p.status.cards, g.deck.community_cards),
                                 p.player
                             ) for p in g.players if not p.status.died
                         ), key=itemgetter(0)
