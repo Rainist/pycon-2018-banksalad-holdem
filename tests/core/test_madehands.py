@@ -2,6 +2,7 @@ import unittest
 
 import holdem.core.madehands as m
 from holdem.core.cards import Card, Rank, Suit
+from holdem.core.madehands import MadeHands
 
 
 class TestMadeHands(unittest.TestCase):
@@ -10,14 +11,16 @@ class TestMadeHands(unittest.TestCase):
         self.assertEqual(
             m.evaluate(
                 [
-                    Card(Rank.ace, Suit.heart),
-                    Card(Rank.two, Suit.heart),
                     Card(Rank.three, Suit.heart),
+                    Card(Rank.two, Suit.heart)
+                ],
+                [
+                    Card(Rank.ace, Suit.heart),
                     Card(Rank.four, Suit.heart),
                     Card(Rank.five, Suit.heart),
                     Card(Rank.six, Suit.heart),
                     Card(Rank.seven, Suit.heart)
                 ]
             ),
-            11
+            (MadeHands.straight_flush, Suit.heart)
         )

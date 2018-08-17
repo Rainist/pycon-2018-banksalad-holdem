@@ -11,10 +11,6 @@ class TestDeck(unittest.TestCase):
         self.assertListEqual(
             deck.cards,
             [
-                Card(Rank.ace, Suit.club),
-                Card(Rank.ace, Suit.heart),
-                Card(Rank.ace, Suit.diamond),
-                Card(Rank.ace, Suit.spade),
                 Card(Rank.two, Suit.club),
                 Card(Rank.two, Suit.heart),
                 Card(Rank.two, Suit.diamond),
@@ -62,6 +58,10 @@ class TestDeck(unittest.TestCase):
                 Card(Rank.king, Suit.club),
                 Card(Rank.king, Suit.heart),
                 Card(Rank.king, Suit.diamond),
-                Card(Rank.king, Suit.spade)
+                Card(Rank.king, Suit.spade),
+                Card(Rank.ace, Suit.club),
+                Card(Rank.ace, Suit.heart),
+                Card(Rank.ace, Suit.diamond),
+                Card(Rank.ace, Suit.spade)
             ]
         )
