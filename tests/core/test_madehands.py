@@ -195,6 +195,23 @@ class TestMadeHands(unittest.TestCase):
             (MadeHands.royal_flush, Rank.ace)
         )
 
+        self.assertEqual(
+            m.evaluate(
+                [
+                    Card(Rank.jack, Suit.spade),
+                    Card(Rank.two, Suit.club)
+                ],
+                [
+                    Card(Rank.four, Suit.diamond),
+                    Card(Rank.eight, Suit.heart),
+                    Card(Rank.queen, Suit.club),
+                    Card(Rank.ten, Suit.diamond),
+                    Card(Rank.six, Suit.club)
+                ]
+            ),
+            (MadeHands.high_card, Rank.queen)
+        )
+
 
 if __name__ == '__main__':
     unittest.main()

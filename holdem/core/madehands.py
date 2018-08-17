@@ -65,49 +65,42 @@ def _get_flush_cards(cards: List[Card]) -> List[Card]:
 def evaluate(
     user_cards: List[Card], community_cards: List[Card]
 ) -> Tuple[MadeHands, Rank]:
-    cards = (user_cards + community_cards)
-    cards.sort(key=_get_tuple_of_card_rank_and_suit)
+    hand_cards = sorted(
+        (user_cards + community_cards),
+        key=_get_tuple_of_card_rank_and_suit
+    )
 
-    default_grouped_cards = {
-        1: [],
-        2: [],
-        3: [],
-        4: [],
-        5: []
-    }
+    rank_grouped_cards = sorted([
+        list(v) for _, v in groupby(hand_cards, key=_get_card_rank)
+    ], key=len)
 
-    rank_grouped_cards = [
-        list(v) for _, v in groupby(cards, key=_get_card_rank)
-    ]
-    rank_grouped_cards.sort(key=len)
-    default_grouped_cards.update({
+    card_pairs = {
         k: list(chain.from_iterable(list(v)))
         for k, v in groupby(rank_grouped_cards, key=len)
-    })
-    card_pairs = default_grouped_cards
+    }
 
-    highest_five_cards = cards[2:]
+    highest_cards = hand_cards[2:]
 
-    straight_mate = _get_straight_cards(cards)
-    flush_mate = _get_flush_cards(cards)
-
+    straight_mate = _get_straight_cards(hand_cards)
+    flush_mate = _get_flush_cards(hand_cards)
     straight_flush_mate = _get_flush_cards(straight_mate)
+
     if straight_flush_mate and straight_flush_mate[-1].rank == Rank.ace:
         return (
             MadeHands.royal_flush,
-            highest_five_cards[-1].rank
+            highest_cards[-1].rank
         )
     elif straight_flush_mate:
         return (
             MadeHands.straight_flush,
             straight_flush_mate[-1].rank
         )
-    elif card_pairs[4]:
+    elif 4 in card_pairs:
         return (
             MadeHands.four_of_a_kind,
             card_pairs[4][-1].rank
         )
-    elif card_pairs[2] and card_pairs[3]:
+    elif 2 in card_pairs and 3 in card_pairs:
         return (
             MadeHands.full_house,
             card_pairs[3][-1].rank
@@ -122,11 +115,11 @@ def evaluate(
             MadeHands.straight,
             straight_mate[0].rank
         )
-    elif card_pairs[3]:
+    elif 3 in card_pairs:
         return MadeHands.three_of_kind, card_pairs[3][-1].rank
-    elif len(card_pairs[2]) >= 4:
+    elif 2 in card_pairs and len(card_pairs[2]) >= 4:
         return MadeHands.two_pairs, card_pairs[2][-1].rank
-    elif card_pairs[2]:
+    elif 2 in card_pairs:
         return MadeHands.pair, card_pairs[2][-1].rank
     else:
-        return MadeHands.high_card, _get_high_card_weight(user_cards)
+        return MadeHands.high_card, _get_high_card_weight(hand_cards)
