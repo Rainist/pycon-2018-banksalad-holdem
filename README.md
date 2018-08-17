@@ -1,4 +1,4 @@
-<h1 align="center">Pycon 2018 x Banksalad Holdem</h1>
+<h1 align="center">Pycon 2018 x Banksalad Hold'em</h1>
 
 <p align="center">
   <img src="./resources/banksalad-holdem.png" alt="banksalad-hold'em" width="256px" />
@@ -33,15 +33,18 @@
 
 <p align="center">3등 / Starbucks 상품권</p>
 
+최종 우승자를 가리는 결승전과 시상식은 8월 19일 오후 5시에 OST 룸에서 진행될 예정입니다. 상품 수령을 위해 **반드시 시상식에 참여 부탁드립니다.**
+
 ## Submission
 
 - **2018년 8월 19일 일요일 오후 4시까지** 제출된 코드에 대해서만 참여자격이 부여됩니다.
 - 작성하신 코드를 [GitHub Gist](https://gist.github.com/)에 업로드 하신 후, [여기](https://goo.gl/forms/v4Nup2q7kgBlmmUh1)에 업로드된 Gist 링크를 제출해주세요.
-- 결승전과 시상식은 8월 19일 오후 5시에 OST룸에서 진행될 예정입니다.
 
-## How to play
+## How to Play
 
-`example.py` 의 `always_bet(...)` 함수를 참고하여 `turn.py` 의 `bet(...)` 함수를 구현해주세요. 코드를 구현하셨다면 [GitHub Gist](https://gist.github.com/)에 업로드 하신 후, [여기](https://goo.gl/forms/v4Nup2q7kgBlmmUh1)에 업로드된 Gist 링크를 제출해주세요.
+### Code
+
+[turn.py](holdem/turn.py) 의 `bet(...)` 함수를 구현해주세요. 구현된 코드([turn.py](holdem/turn.py))를 [GitHub Gist](https://gist.github.com/)에 업로드 하신 후, [여기](https://goo.gl/forms/v4Nup2q7kgBlmmUh1)에 업로드된 Gist 링크를 제출해주세요.
 
 ```python
 def bet(
@@ -57,28 +60,53 @@ def bet(
     pass
 ```
 
-### Return
+#### Return
 
-- 베팅할 Amount (Int)
+- 베팅할 칩의 수 (Int)
   - `0`을 `return` 하게 되면 해당 턴은 포기(`die`)한다는 의미입니다.
+  - 반드시 `min_bet_amt`와 `max_bet_amt`를 고려하여 베팅할 칩 수를 결정해주세요. (올바르지 않은 범위의 값을 반환할 경우, 자동으로 해당 라운드에서 제외됩니다.)
+  - 가지고 있는 모든 칩을 베팅할 경우 올인 형태로 진행됩니다.
+- 함수 실행 중 에러가 발생할 경우, 해당 라운드에서 제외됩니다.
+- 함수 실행 시간이 1초 이상 걸릴 경우, 해당 라운드에서 제외됩니다. 
+
+#### Example
+
+```python
+def always_bet(
+    my_chips: int,
+    my_cards: List[Card],
+    bet_players: List[Other],
+    betting_players: List[Other],
+    community_cards: List[Card],
+    min_bet_amt: int,
+    max_bet_amt: int,
+    total_bet_amt: int
+) -> int:
+    if my_chips >= min_bet_amt:
+        return min(max_bet_amt, min_bet_amt)
+    else:
+        return 0
+
+```
+
+[example.py](holdem/example.py)의 `always_bet(...)` 의 경우, 현재 게임 상황을 고려하지 않고 반드시 베팅을 하도록 구현되어 있습니다. 
+
 
 ### Run
+
+작성하신 코드를 테스트해보기 위해, 직접 프로그램을 실행해볼 수 있습니다. [__main__.py](holdem/__main__.py)의 하단 실행부 코드를 변경하여, 다양한 환경에서 실험해보실 수 있습니다.
 
 ```bash
 python3 -m holdem
 ```
 
-UNIX 이외의 환경에서는 제약이 있을 수 있기 때문에, UNIX 이외의 환경에서는 **Docker**를 활용해주세요.
+UNIX 이외의 환경에서는 올바르게 동작하지 않습니다. UNIX 이외의 환경에서는 **Docker**를 활용하여 코드를 실행해보실 수 있습니다.
 
 ```bash
 docker-compose run holdem
 ```
 
 > 게임이 완료된 후 생성된 `play.log` 파일을 [뱅크샐러드 카지노](https://casino.pycon2018.banksalad.com)에 업로드하시면 게임이 진행된 과정을 눈으로 확인하실 수 있습니다!
-
-### Test
-
-작성한 코드를 테스트하려면, `__main__.py` 에서 `example.always_bet` 대신 `turn.py` 의 `bet` 함수를 `import` 하고 테스트하실 수 있습니다.
 
 -----
 
@@ -123,7 +151,7 @@ docker-compose run holdem
 
 ### 뱅크샐러드 홀덤 족보
 
-> 높은 순서대로 나열되어 있습니다.
+> 배점이 높은 순서대로 나열되어 있습니다.
 
 #### 로열 플러시
 
@@ -177,6 +205,6 @@ docker-compose run holdem
 - 패가 같은 플레이어가 여러 명인 경우에는 만들어진 패의 숫자를 비교합니다.
 - 만들어진 패의 숫자도 경우에는 그 판은 동점이 되어 판돈은 플레이어 수로 나누어 가져갑니다.
 
-## Questions?
+## Any Questions?
 
-[Issue](https://github.com/Rainist/pycon-2018-banksalad-holdem/issues)를 활용해주시거나, 뱅크샐러드 부스를 방문해주세요 😎
+[Issue](https://github.com/Rainist/pycon-2018-banksalad-holdem/issues)를 통해 질문을 남겨주시거나, 파이콘 뱅크샐러드 부스를 방문해주세요 😎
