@@ -5,6 +5,7 @@ from typing import List, Tuple
 
 from .logger import error, log
 from .player import Me, Other
+from .timeout import Timeout
 from .core.deck import Deck, draw, flop, init, shuffle
 from .core.game import ActivePlayer, Game, GameState, Player, PlayerGameStatus
 from .core.madehands import evaluate
@@ -165,27 +166,28 @@ def players_bet(g: Game) -> Game:
             max_bet_amt = min(p.player.chips for p in ps + acc)
 
             try:
-                bet_amt = p.player.meta.bet(
-                    Me(p.player.chips, p.status.cards),
-                    [
-                        Other(
-                            p.player.chips,
-                            p.status.bet_amt,
-                            p.status.died
-                        ) for p in acc
-                    ],
-                    [
-                        Other(
-                            p.player.chips,
-                            p.status.bet_amt,
-                            p.status.died
-                        ) for p in ps[1:]
-                    ],
-                    g.deck.community_cards,
-                    min_bet_amt,
-                    max_bet_amt,
-                    g.acc_chips + sum(p.status.bet_amt for p in ps + acc)
-                )
+                with Timeout(seconds=1):
+                    bet_amt = p.player.meta.bet(
+                        Me(p.player.chips, p.status.cards),
+                        [
+                            Other(
+                                p.player.chips,
+                                p.status.bet_amt,
+                                p.status.died
+                            ) for p in acc
+                        ],
+                        [
+                            Other(
+                                p.player.chips,
+                                p.status.bet_amt,
+                                p.status.died
+                            ) for p in ps[1:]
+                        ],
+                        g.deck.community_cards,
+                        min_bet_amt,
+                        max_bet_amt,
+                        g.acc_chips + sum(p.status.bet_amt for p in ps + acc)
+                    )
 
                 assert max_bet_amt >= bet_amt >= min_bet_amt
 
@@ -229,6 +231,25 @@ def players_bet(g: Game) -> Game:
                 error(
                     f'{p.player.meta.name} tried to bet {bet_amt} chips. '
                     f'(min: {min_bet_amt}, max: {max_bet_amt})'
+                )
+                return _bet(
+                    last_bet_amt,
+                    ps[1:],
+                    acc + [
+                        ActivePlayer(
+                            p.player,
+                            PlayerGameStatus(
+                                p.status.cards,
+                                p.status.bet_amt,
+                                True
+                            )
+                        )
+                    ]
+                )
+            except TimeoutError:
+                error(
+                    f'{p.player.meta.name} tried to bet, '
+                    f'but it took too long!'
                 )
                 return _bet(
                     last_bet_amt,
