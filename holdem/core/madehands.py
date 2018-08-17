@@ -33,19 +33,15 @@ def _get_high_card_weight(cards: List[Card]) -> Rank:
 
 
 def _is_same_suit(cards: List[Card]) -> bool:
-    head = cards[0]
-    tail = cards[1:]
-    return all(head.suit == card.suit for card in tail)
+    return all(cards[0].suit == card.suit for card in cards)
 
 
 def _get_straight_cards(cards: List[Card]) -> List[Card]:
-    cards = cards[:]
-
-    if cards[-1].rank == Rank.ace:
-        cards = [Card(Rank.one_ace, cards[-1].suit)] + cards
+    circulated_cards = [Card(Rank.one_ace, cards[-1].suit)] + cards \
+        if cards[-1].rank == Rank.ace else cards
 
     for i in range(0, 4):
-        card_slice = cards[-1 - i: -6 - i: -1]
+        card_slice = circulated_cards[-1 - i: -6 - i: -1]
         if all(
             x.rank - y.rank == 1 for x, y in zip(card_slice, card_slice[1:])
         ):
