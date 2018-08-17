@@ -4,7 +4,7 @@ from .core.cards import Card
 from .player import Other
 
 
-def bet(
+def always_bet(
     my_chips: int,
     my_cards: List[Card],
     bet_players: List[Other],
@@ -14,4 +14,7 @@ def bet(
     max_bet_amt: int,
     total_bet_amt: int
 ) -> int:
-    pass
+    if my_chips >= min_bet_amt:
+        return min(max_bet_amt, min_bet_amt)
+    else:
+        return 0
