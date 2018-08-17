@@ -37,8 +37,8 @@ def _get_straight_cards(cards: List[Card]) -> List[Card]:
     if cards[-1].rank == Rank.ace:
         cards = [Card(Rank.one_ace, cards[-1].suit)] + cards
 
-    for i in range(2, -2, -1):
-        card_slice = cards[i + 5: i: -1]
+    for i in range(0, 4):
+        card_slice = cards[-1 - i: -6 - i: -1]
         if all(x.rank - y.rank == 1 for x, y in zip(card_slice, card_slice[1:])):
             return card_slice
 
@@ -83,7 +83,6 @@ def evaluate(user_cards: List[Card], community_cards: List[Card]) -> Tuple[MadeH
     straight_mate = _get_straight_cards(cards)
     flush_mate = _get_flush_cards(cards)
     straight_flush_mate = _get_flush_cards(straight_mate)
-
     if map(lambda c: c.rank, rsfcs) == STRAIGHT_FLUSH_RANKS and _is_same_suit(rsfcs):
         return (
             MadeHands.royal_flush,
