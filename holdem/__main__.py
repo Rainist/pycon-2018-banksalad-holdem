@@ -44,8 +44,7 @@ def main(players: List[MetaPlayer]):
 
     t = 1
     while len(players) > MIN_NR_OF_WINNERS and t < MAX_NR_OF_TURNS:
-        for i in range(len(players)):
-            players[i].chips -= RAKE
+        players = [Player(p.meta, p.chips - RAKE) for p in players]
         players = run(t, players)
         t += 1
 
@@ -99,16 +98,15 @@ def run(t: int, players: List[Player]) -> List[Player]:
                         ) for p in g.players
                     ],
                     g.acc_chips,
-                    g.is_all_in
+                    g.all_in
                 ); log(g)
 
                 return _run(g, process[1:])
             elif curr == GameState.bet:
-                if g.is_all_in:
+                if g.all_in:
                     return _run(g, process[1:])
 
                 g = players_bet(g); log(g)
-
                 left_players = [p for p in g.players if not p.status.died]
                 if not left_players:
                     return [p.player for p in g.players]
@@ -179,7 +177,7 @@ def players_draw(g: Game) -> Game:
             return d, acc
 
     deck, players = _draw(g.deck, g.players, [])
-    return Game(g.round, deck, players, g.acc_chips, g.is_all_in)
+    return Game(g.round, deck, players, g.acc_chips, g.all_in)
 
 
 def players_bet(g: Game) -> Game:
@@ -341,7 +339,7 @@ def players_bet(g: Game) -> Game:
         g.deck,
         bet_players,
         g.acc_chips + sum(p.status.bet_amt for p in bet_players),
-        True if any(p.player.chips == 0 for p in bet_players) else False
+        any(p.player.chips == 0 for p in bet_players)
     )
 
 
