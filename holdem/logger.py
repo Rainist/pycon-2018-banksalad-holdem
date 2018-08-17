@@ -32,7 +32,8 @@ def log(g: Game):
                 'chips': p.player.chips,
                 'died': p.status.died
             } for p in g.players
-        ]
+        ],
+        'all_in': g.all_in
     }))
 
 

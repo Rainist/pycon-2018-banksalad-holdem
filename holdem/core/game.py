@@ -35,6 +35,7 @@ class Game:
     deck: Deck
     players: List[ActivePlayer]
     acc_chips: int
+    all_in: bool
 
 
 class GameState(IntEnum):
