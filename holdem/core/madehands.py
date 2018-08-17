@@ -44,7 +44,7 @@ def _get_straight_cards(cards: List[Card]) -> List[Card]:
         card_slice = circulated_cards[-1 - i: -6 - i: -1]
         if all(
             x.rank - y.rank == 1 for x, y in zip(card_slice, card_slice[1:])
-        ):
+        ) and len(card_slice) == 5:
             return card_slice
 
     return []

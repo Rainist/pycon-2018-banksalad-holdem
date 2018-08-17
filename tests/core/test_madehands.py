@@ -130,6 +130,23 @@ class TestMadeHands(unittest.TestCase):
         self.assertEqual(
             m.evaluate(
                 [
+                    Card(Rank.ace, Suit.spade),
+                    Card(Rank.three, Suit.heart)
+                ],
+                [
+                    Card(Rank.six, Suit.club),
+                    Card(Rank.four, Suit.diamond),
+                    Card(Rank.five, Suit.heart),
+                    Card(Rank.ten, Suit.spade),
+                    Card(Rank.eight, Suit.heart)
+                ]
+            ),
+            (MadeHands.high_card, Rank.ace)
+        )
+
+        self.assertEqual(
+            m.evaluate(
+                [
                     Card(Rank.jack, Suit.spade),
                     Card(Rank.two, Suit.spade)
                 ],
