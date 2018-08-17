@@ -4,7 +4,7 @@ from operator import itemgetter
 from typing import List, Tuple
 
 from .logger import error, log
-from .player import Me, Other
+from .player import Other
 from .timeout import Timeout
 from .core.deck import Deck, draw, flop, init, shuffle
 from .core.game import ActivePlayer, Game, GameState, Player, PlayerGameStatus
