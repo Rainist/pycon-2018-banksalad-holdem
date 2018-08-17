@@ -1,7 +1,7 @@
 <h1 align="center">Pycon 2018 X Banksalad Holdem</h1>
 
 <p align="center">
-  <img src="./resources/banksalad-holdem.png" alt="banksalad-hold'em" width="384px" />
+  <img src="./resources/banksalad-holdem.png" alt="banksalad-hold'em" width="256px" />
 </p>
 
 <p align="center">
