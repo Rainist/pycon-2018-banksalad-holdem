@@ -192,7 +192,7 @@ class TestMadeHands(unittest.TestCase):
                     Card(Rank.six, Suit.club)
                 ]
             ),
-            (MadeHands.royal_flush, Suit.club)
+            (MadeHands.royal_flush, Rank.ace)
         )
 
 

@@ -28,7 +28,7 @@ def _get_tuple_of_card_rank_and_suit(card: Card):
     return card.rank, card.suit
 
 
-def _get_high_card_weight(cards: List[Card]) -> int:
+def _get_high_card_weight(cards: List[Card]) -> Rank:
     return max(cards, key=_get_card_rank).rank
 
 
@@ -68,7 +68,7 @@ def _get_flush_cards(cards: List[Card]) -> List[Card]:
 
 def evaluate(
     user_cards: List[Card], community_cards: List[Card]
-) -> Tuple[MadeHands, int]:
+) -> Tuple[MadeHands, Rank]:
     cards = (user_cards + community_cards)
     cards.sort(key=_get_tuple_of_card_rank_and_suit)
 
@@ -99,7 +99,7 @@ def evaluate(
     if straight_flush_mate and straight_flush_mate[-1].rank == Rank.ace:
         return (
             MadeHands.royal_flush,
-            highest_five_cards[-1].suit
+            highest_five_cards[-1].rank
         )
     elif straight_flush_mate:
         return (
