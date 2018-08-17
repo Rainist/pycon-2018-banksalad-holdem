@@ -5,8 +5,8 @@
 </p>
 
 <p align="center">
-  <a href="https://travis-ci.com/Rainist/pycon-2018-banksalad-holdem">
-    <img src="https://travis-ci.com/Rainist/pycon-2018-banksalad-holdem.svg?token=QyscejF8kE7e7yFMNhFB&branch=develop" alt="Travis CI Build Status" />
+  <a href="https://travis-ci.org/Rainist/pycon-2018-banksalad-holdem">
+    <img src="https://travis-ci.org/Rainist/pycon-2018-banksalad-holdem.svg?branch=develop" alt="Travis CI Build Status" />
   </a>
   <a href="https://www.python.org/downloads/release/python-370/">
     <img src="https://img.shields.io/badge/python-3.7-blue.svg" alt="python 3.7" />
