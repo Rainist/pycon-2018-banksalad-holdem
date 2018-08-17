@@ -11,14 +11,14 @@ class TestMadeHands(unittest.TestCase):
         self.assertEqual(
             m.evaluate(
                 [
-                    Card(Rank.two, Suit.club),
+                    Card(Rank.ace, Suit.heart),
                     Card(Rank.two, Suit.heart)
                 ],
                 [
-                    Card(Rank.ace, Suit.heart),
-                    Card(Rank.ace, Suit.club),
+                    Card(Rank.three, Suit.heart),
+                    Card(Rank.four, Suit.heart),
                     Card(Rank.five, Suit.heart),
-                    Card(Rank.six, Suit.club),
+                    Card(Rank.six, Suit.heart),
                     Card(Rank.seven, Suit.heart)
                 ]
             ),
