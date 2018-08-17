@@ -44,7 +44,6 @@ def main(players: List[MetaPlayer]):
 
     t = 1
     while len(players) > MIN_NR_OF_WINNERS and t < MAX_NR_OF_TURNS:
-        print(t)
         for i in range(len(players)):
             players[i].chips -= RAKE
         players = run(t, players)
@@ -105,7 +104,6 @@ def run(t: int, players: List[Player]) -> List[Player]:
 
                 return _run(g, process[1:])
             elif curr == GameState.bet:
-                print(g.is_all_in) if g.is_all_in == True else print('',end='')
                 if g.is_all_in:
                     return _run(g, process[1:])
 
