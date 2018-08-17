@@ -36,7 +36,7 @@ def evaluate(cards: List[Card]) -> Tuple[MadeHands, Rank, Suit]:
     suit_dict = {
         len(suit) : suit for suit in suits
     }
-    longest_suit = suit_dict[max(suit_dict)]
+    longest_suit = suit_dict[max(suit_dict)][2:]
 
     if (len(longest_suit) == FLUSH_LENGTH_THRESHOLD):
         suit = longest_suit[0].suit
