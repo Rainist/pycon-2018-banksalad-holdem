@@ -163,7 +163,7 @@ def players_bet(g: Game) -> Game:
                 return _bet(last_bet_amt, ps[1:], acc + [p])
 
             min_bet_amt = max(last_bet_amt, MIN_BET_AMT) - p.status.bet_amt
-            max_bet_amt = min(p.player.chips for p in ps + acc)
+            max_bet_amt = min(p.player.chips for p in ps + acc if not p.status.died)
 
             try:
                 with Timeout(seconds=1):
