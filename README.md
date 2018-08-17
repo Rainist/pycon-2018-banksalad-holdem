@@ -34,23 +34,23 @@
 ## Submission
 
 - **2018년 8월 19일 일요일 오후 4시까지** 제출된 코드에 대해서만 참여자격이 부여됩니다.
-- 작성하신 코드를 [GitHub Gist](https://gist.github.com/)에 업로드 하신 후, [여기](https://goo.gl/forms/v4Nup2q7kgBlmmUh1)에 업로드 된 Gist 링크를 제출해주세요.
+- 작성하신 코드를 [GitHub Gist](https://gist.github.com/)에 업로드 하신 후, [여기](https://goo.gl/forms/v4Nup2q7kgBlmmUh1)에 업로드된 Gist 링크를 제출해주세요.
 - 결승전과 시상식은 8월 19일 오후 5시에 OST룸에서 진행될 예정입니다.
 
 ## How to play
 
-`example.py` 의 `always_bet(...)` 함수를 참고하여 `turn.py` 의 `bet(...)` 함수를 작성하신 코드를 [GitHub Gist](https://gist.github.com/)에 업로드 하신 후, [여기](https://goo.gl/forms/v4Nup2q7kgBlmmUh1)에 업로드 된 Gist 링크를 제출해주세요.
+`example.py` 의 `always_bet(...)` 함수를 참고하여 `turn.py` 의 `bet(...)` 함수를 작성하신 코드를 [GitHub Gist](https://gist.github.com/)에 업로드 하신 후, [여기](https://goo.gl/forms/v4Nup2q7kgBlmmUh1)에 업로드된 Gist 링크를 제출해주세요.
 
 ```python
 def bet(
     my_chips: int, # 남은 칩 수
     my_cards: List[Card], # 플래이어의 손 패 (2장)
-    bet_players: List[Other], # 이번 턴에 배팅한 플레이어들
-    betting_players: List[Other], # 아직 배팅하지 않은 플레이어들
+    bet_players: List[Other], # 이번 턴에 베팅한 플레이어들
+    betting_players: List[Other], # 아직 베팅하지 않은 플레이어들
     community_cards: List[Card], # 커뮤니티 카드 + 턴 카드 + 리버 카드 (3장 ~ 5장)
-    min_bet_amt: int, # 가능한 최소 배팅액
-    max_bet_amt: int, # 가능한 최대 배팅액
-    total_bet_amt: int # 여태까지 배팅한 누적 금액
+    min_bet_amt: int, # 가능한 최소 베팅액
+    max_bet_amt: int, # 가능한 최대 베팅액
+    total_bet_amt: int # 여태까지 베팅한 누적 금액
 ) -> int:
     pass
 ```
@@ -76,7 +76,7 @@ docker-compose run holdem
 
 ### Test
 
-작성한 코드를 테스트 하려면, `__main__.py` 에서 `example.always_bet` 대신 `turn.py` 의 `bet` 함수를 `import` 하고 테스트하실 수 있습니다.
+작성한 코드를 테스트하려면, `__main__.py` 에서 `example.always_bet` 대신 `turn.py` 의 `bet` 함수를 `import` 하고 테스트하실 수 있습니다.
 
 -----
 
@@ -98,6 +98,7 @@ docker-compose run holdem
 5. 남은 플레이어가 공통으로 오픈된 5장의 커뮤니티 카드와 2장의 핸드를 비교하여 순위를 매깁니다.
 
 ### 용어
+
 - 콜(call): 앞 순서의 플레이어가 판돈을 올린 것을 받아들인다는 의미입니다.
 - 레이즈(raise): 앞 순서의 플레이어가 판돈을 올린 것을 받아들이되, 추가로 베팅을 하는 것을 의미합니다.
 - 폴드(fold) : 해당 라운드를 포기합니다. 다이(die)라고도 합니다.
@@ -105,17 +106,18 @@ docker-compose run holdem
 - 플랍(flop) : 처음으로 열리는 3장의 카드
 - 턴 카드(turn card) : 2번째로 열리는 1장의 카드
 - 리버 카드(river card) : 마지막으로 열리는 1장의 카드
-- 커뮤니티 카드(community cards) : 바닥에 놓여져 공통으로 사용되는 카드
+- 커뮤니티 카드(community cards) : 바닥에 놓여 공통으로 사용되는 카드
 - 쇼다운(showdown) : 리버 카드까지 열리고 남은 사람들끼리 패를 비교하는 과정
-- 올인(All-in) : 현재 플레이어가 갖고있는 남은 모든 금액을 거는 행위
+- 올인(All-in) : 현재 플레이어가 가진 모든 금액을 거는 행위
 
 ### 베팅 조건
+
 - 게임이 시작되면 모든 플레이어는 200개의 칩을 가지고 시작합니다.
-- 매 라운드마다 참여비 칩 한개를 모든 플레이어에게 받습니다.
+- 라운드마다 참여비 칩 한 개를 모든 플레이어에게 받습니다.
 - 뱅크샐러드 홀덤에서는 자기 차례에 콜, 레이즈를 할 수 있으며 선으로 뽑힌 플레이어부터 판돈을 제시하고 다른 플레이어들에게 돌아가며 제시된 판돈에 대해 콜을 할지, 레이즈를 할지 정하게 됩니다.
   - 콜을 할 경우 다른 플레이어로 순서가 넘어갑니다.
   - 레이즈를 할 경우, 해당 플레이어를 기준으로 한 바퀴를 다시 돌게 됩니다.
-- 라운드를 진행하고 있는 중에 올인(All-in)을 하게 되면 해당 플레이어를 기준으로 한 바퀴를 다시 돌고 모든 플레이어의 선택이 끝난 후에는 마지막 쇼다운까지 베팅없이 진행됩니다.
+- 라운드를 진행하는 중에 올인(All-in)을 하게 되면 해당 플레이어를 기준으로 한 바퀴를 다시 돌고 모든 플레이어의 선택이 끝난 후에는 마지막 쇼다운까지 베팅 없이 진행됩니다.
 
 ### 뱅크샐러드 홀덤 족보
 
@@ -170,7 +172,7 @@ docker-compose run holdem
 
 - 로열 플러시가 두벌 이상 나왔을 경우에는 _(거의 불가능한 확률)_ **스페이드 > 다이아몬드 > 하트 > 클로버** 순으로 높은 패로 인정됩니다.
 - 로열 플러시가 아닌 경우에는 패가 만들어진 카드 중 가장 높은 숫자만을 비교합니다.
-- 패가 동일한 플레이어가 여러명인 경우에는 만들어진 패의 숫자를 비교합니다.
+- 패가 같은 플레이어가 여러 명인 경우에는 만들어진 패의 숫자를 비교합니다.
 - 만들어진 패의 숫자도 경우에는 그 판은 동점이 되어 판돈은 플레이어 수로 나누어 가져갑니다.
 
 ## Questions?
