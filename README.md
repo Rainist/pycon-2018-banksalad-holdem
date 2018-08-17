@@ -5,6 +5,9 @@
 </p>
 
 <p align="center">
+  <a href="https://www.python.org/downloads/release/python-370/">
+    <img src="https://img.shields.io/badge/python-3.7-blue.svg" alt="python 3.7" />
+  </a>
   <a href="https://rainist.com/recruit">
     <img src="https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-Rainist-blue.svg" alt="love" />
   </a>
@@ -17,12 +20,12 @@
 ## Prize
 
 <p align="center">
-  <img src="./resources/ipad-pro.png" alt="ipad" width="384px" />
+  <img src="./resources/ipad-pro.png" alt="ipad" width="256px" />
 </p>
 <h3 align="center">1등 / iPad Pro 10.5"</h3>
 
 <p align="center">
-  <img src="./resources/airpods.png" alt="ipad" width="256px" />
+  <img src="./resources/airpods.png" alt="ipad" width="154px" />
 </p>
 <p align="center">2등 / AirPods</p>
 
