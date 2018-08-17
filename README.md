@@ -37,6 +37,58 @@
 - 작성하신 코드를 [GitHub Gist](https://gist.github.com/)에 업로드 하신 후, [여기](https://goo.gl/forms/v4Nup2q7kgBlmmUh1)에 업로드 된 Gist 링크를 제출해주세요.
 - 결승전과 시상식은 8월 19일 오후 5시에 OST룸에서 진행될 예정입니다.
 
+## How to play
+
+`example.py` 의 `always_bet(...)` 함수를 참고하여 `turn.py` 의 `bet(...)` 함수를 작성하신 코드를 [GitHub Gist](https://gist.github.com/)에 업로드 하신 후, [여기](https://goo.gl/forms/v4Nup2q7kgBlmmUh1)에 업로드 된 Gist 링크를 제출해주세요.
+
+```python
+def bet(
+    my_chips: int,
+    my_cards: List[Card],
+    bet_players: List[Other],
+    betting_players: List[Other],
+    community_cards: List[Card],
+    min_bet_amt: int,
+    max_bet_amt: int,
+    total_bet_amt: int
+) -> int:
+    pass
+```
+
+### Parameters
+
+- my_chips: 남은 칩 수
+- my_cards: 플래이어의 손 패 (2장)
+- bet_players: 이번 턴에 배팅한 플레이어들
+- betting_players: 아직 배팅하지 않은 플레이어들
+- community_cards: 커뮤니티 카드 + 턴 카드 + 리버 카드 (3장~5장)
+- min_bet_amt: 가능한 최소 배팅액
+- max_bet_amt: 가능한 최대 배팅액
+- total_bet_amt: 여태까지 배팅한 누적 금액
+
+### Return
+
+- 베팅할 Amount (Int)
+  - `0`을 `return` 하게 되면 해당 턴은 포기(`die`)한다는 의미입니다.
+
+### Run
+
+```bash
+python3 -m holdem
+```
+
+UNIX 이외의 환경에서는 제약이 있을 수 있기 때문에, UNIX 이외의 환경에서는 **Docker**를 활용해주세요.
+
+```bash
+docker-compose run holdem
+```
+
+> 게임이 완료된 후 생성된 `play.log` 파일을 [뱅크샐러드 카지노](https://casino.pycon2018.banksalad.com)에 업로드하시면 게임이 진행된 과정을 눈으로 확인하실 수 있습니다!
+
+### Test
+
+작성한 코드를 테스트 하려면, `__main__.py` 에서 `example.always_bet` 대신 `turn.py` 의 `bet` 함수를 `import` 하고 테스트하실 수 있습니다.
+
 ## Rule
 
 ### 게임의 진행
@@ -56,7 +108,7 @@
 
 ### 용어
 - 콜(call): 앞의 플레이어가 판돈을 올린 것을 받아들인다는 의미입니다.
-- 레이즈(raise): 앞의 플레이어가 판돈을 올린 것을 받아들이되, 추가로 베팅을 하는 것을 의미합니다. 
+- 레이즈(raise): 앞의 플레이어가 판돈을 올린 것을 받아들이되, 추가로 베팅을 하는 것을 의미합니다.
 - 폴드(fold) : 해당 라운드를 포기합니다. 다이(die)라고도 합니다.
 - 핸드(hands) : 플레이어의 손에 있는 2장의 카드
 - 플랍(flop) : 처음으로 열리는 3장의 카드
@@ -127,56 +179,6 @@
 - 로열 플러시가 아닌 경우에는 패가 만들어진 카드 중 가장 높은 숫자만을 비교합니다.
 - 패가 동일한 플레이어가 여러명인 경우에는 만들어진 패의 숫자를 비교합니다.
 - 만들어진 패의 숫자도 경우에는 그 판은 동점이 되어 판돈은 플레이어 수로 나누어 가져갑니다.
-
-## How to play
-
-`example.py` 의 `always_bet(...)` 함수를 참고하여 `turn.py` 의 `bet(...)` 함수를 작성하신 코드를 [GitHub Gist](https://gist.github.com/)에 업로드 하신 후, [여기](https://goo.gl/forms/v4Nup2q7kgBlmmUh1)에 업로드 된 Gist 링크를 제출해주세요.
-
-```python
-def bet(
-    my_chips: int,
-    my_cards: List[Card],
-    bet_players: List[Other],
-    betting_players: List[Other],
-    community_cards: List[Card],
-    min_bet_amt: int,
-    max_bet_amt: int,
-    total_bet_amt: int
-) -> int:
-    pass
-```
-
-### Parameters
-
-- my_chips: 남은 칩 수
-- my_cards: 플래이어의 손 패 (2장)
-- bet_players: 이번 턴에 배팅한 플레이어들
-- betting_players: 아직 배팅하지 않은 플레이어들
-- community_cards: 커뮤니티 카드 + 턴 카드 + 리버 카드 (3장~5장)
-- min_bet_amt: 가능한 최소 배팅액
-- max_bet_amt: 가능한 최대 배팅액
-- total_bet_amt: 여태까지 배팅한 누적 금액
-
-### Return
-
-- 베팅할 Amount (Int)
-  - `0`을 `return` 하게 되면 해당 턴은 포기(`die`)한다는 의미입니다.
-
-### Test
-
-작성한 코드를 테스트 하려면, `__main__.py` 에서 `example.always_bet` 대신 `turn.py` 의 `bet` 함수를 `import` 하고 테스트하실 수 있습니다.
-
-### Run
-
-```bash
-python3 -m holdem
-```
-
-UNIX 이외의 환경에서는 제약이 있을 수 있기 때문에, UNIX 이외의 환경에서는 **Docker**를 활용해주세요.
-
-```bash
-docker-compose run holdem
-```
 
 ## Questions?
 
