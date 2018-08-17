@@ -22,6 +22,7 @@ def _log_card(c: Card) -> dict:
 def log(g: Game):
     logging.info(json.dumps({
         'round': g.round,
+        'acc_chips': g.acc_chips,
         'community_cards': [_log_card(c) for c in g.deck.community_cards],
         'players': [
             {
