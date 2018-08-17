@@ -86,7 +86,6 @@ def evaluate(user_cards: List[Card], community_cards: List[Card]) -> Tuple[MadeH
     flush_mate = _get_flush_cards(cards)
     straight_flush_mate = _get_flush_cards(straight_mate)
 
-    print(rank_grouped_cards[2])
     if map(lambda c: c.rank, rsfcs) == STRAIGHT_FLUSH_RANKS and _is_same_suit(rsfcs):
         return (
             MadeHands.royal_flush,
