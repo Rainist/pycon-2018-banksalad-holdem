@@ -164,29 +164,29 @@ def players_bet(g: Game) -> Game:
             min_bet_amt = max(last_bet_amt, MIN_BET_AMT) - p.status.bet_amt
             max_bet_amt = min(p.player.chips for p in ps + acc)
 
-            bet_amt = p.player.meta.bet(
-                Me(p.player.chips, p.status.cards),
-                [
-                    Other(
-                        p.player.chips,
-                        p.status.bet_amt,
-                        p.status.died
-                    ) for p in acc
-                ],
-                [
-                    Other(
-                        p.player.chips,
-                        p.status.bet_amt,
-                        p.status.died
-                    ) for p in ps[1:]
-                ],
-                g.deck.community_cards,
-                min_bet_amt,
-                max_bet_amt,
-                g.acc_chips + sum(p.status.bet_amt for p in ps + acc)
-            )
-
             try:
+                bet_amt = p.player.meta.bet(
+                    Me(p.player.chips, p.status.cards),
+                    [
+                        Other(
+                            p.player.chips,
+                            p.status.bet_amt,
+                            p.status.died
+                        ) for p in acc
+                    ],
+                    [
+                        Other(
+                            p.player.chips,
+                            p.status.bet_amt,
+                            p.status.died
+                        ) for p in ps[1:]
+                    ],
+                    g.deck.community_cards,
+                    min_bet_amt,
+                    max_bet_amt,
+                    g.acc_chips + sum(p.status.bet_amt for p in ps + acc)
+                )
+
                 assert max_bet_amt >= bet_amt >= min_bet_amt
 
                 if bet_amt == min_bet_amt:
@@ -229,6 +229,25 @@ def players_bet(g: Game) -> Game:
                 error(
                     f'{p.player.meta.name} tried to bet {bet_amt} chips. '
                     f'(min: {min_bet_amt}, max: {max_bet_amt})'
+                )
+                return _bet(
+                    last_bet_amt,
+                    ps[1:],
+                    acc + [
+                        ActivePlayer(
+                            p.player,
+                            PlayerGameStatus(
+                                p.status.cards,
+                                p.status.bet_amt,
+                                True
+                            )
+                        )
+                    ]
+                )
+            except Exception as e:
+                error(
+                    f'{p.player.meta.name} tried to bet, '
+                    f'but something went wrong ({e.__class__.__name__})!'
                 )
                 return _bet(
                     last_bet_amt,
