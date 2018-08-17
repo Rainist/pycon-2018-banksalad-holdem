@@ -1,0 +1,8 @@
+version: '3'
+services:
+  holdem:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/var/www/app
