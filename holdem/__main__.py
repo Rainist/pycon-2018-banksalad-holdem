@@ -44,11 +44,11 @@ def main(players: List[MetaPlayer]):
 
     t = 1
     while len(players) > MIN_NR_OF_WINNERS and t < MAX_NR_OF_TURNS:
-        players = [p for p in players if p.chips > 0]
-        random.shuffle(players)
-
         players = run(t, players)
         t += 1
+
+        players = [p for p in players if p.chips > 0]
+        random.shuffle(players)
 
     # TODO: ON GAME FINISHED
     sorted_players = sorted(players, key=get_chip, reverse=True)
