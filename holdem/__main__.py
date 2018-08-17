@@ -30,6 +30,10 @@ MIN_NR_OF_WINNERS = 2
 MAX_NR_OF_TURNS = 100
 
 
+def get_chip(player: Player):
+    return player.chips
+
+
 def main(players: List[MetaPlayer]):
     players = [
         Player(
@@ -47,8 +51,9 @@ def main(players: List[MetaPlayer]):
         t += 1
 
     # TODO: ON GAME FINISHED
-    for p in players:
-        print(p.meta.name)
+    sorted_players = sorted(players, key=get_chip, reverse=True)
+    for p in sorted_players:
+        print(f'Player: {p.meta.name} Chips: {p.chips}')
 
 
 def run(t: int, players: List[Player]) -> List[Player]:
