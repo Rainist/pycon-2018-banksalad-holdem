@@ -25,7 +25,8 @@ def evaluate(cards: List[Card]) -> int:
     suits = [c.suit for c in cards]
 
     flush_table = {
-        min(suits.count(s), 5): _is_straight(c.rank for c in cards if c.suit == s)
+        min(suits.count(s), 5):
+            _is_straight(c.rank for c in cards if c.suit == s)
         for s in suits
     }
     flush = 5 in flush_table
