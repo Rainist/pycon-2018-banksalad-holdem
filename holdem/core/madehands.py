@@ -1,54 +1,102 @@
 from .cards import Card, Rank, Suit
 from enum import IntEnum
 from typing import List, Optional, Tuple
-from itertools import groupby
+from itertools import chain, groupby
 
 
-TRIPLE_LENGTH = 3
-FOUR_CARD_LENGTH = 4
-FLUSH_LENGTH_THRESHOLD = 5
-ROYALE_STRAIGHT_FLUSH_RANKS = [Rank.ace, Rank.ten, Rank.jack, Rank.queen, Rank.king]
-BACK_STRAIGHT_FLUSH_RANKS = [Rank.ace, Rank.two, Rank.three, Rank.four, Rank.five]
-MOUNTAIN_RANKS = ROYALE_STRAIGHT_FLUSH_RANKS
+STRAIGHT_FLUSH_RANKS = [Rank.ten, Rank.jack, Rank.queen, Rank.king, Rank.ace]
 
 
 class MadeHands(IntEnum):
-    top = 1
-    one_pair = 2
-    two_pair = 3
-    triple = 4
+    high_card = 1
+    pair = 2
+    two_pairs = 3
+    three_of_kind = 4
     straight = 5
-    back_straight = 6
-    mountain = 7
-    flush = 8
-    full_house = 9
-    four_card = 10
-    straight_flush = 11
-    back_straight_flush = 12
-    royale_straight_flush = 13
+    flush = 6
+    full_house = 7
+    four_of_a_kind = 8
+    straight_flush = 9
+    royal_flush = 10
 
 
-def evaluate(cards: List[Card]) -> Tuple[MadeHands, Rank, Suit]:
+def _get_high_card_weight(cards: List[Card]) -> int:
+    return max(cards, key=lambda card: card.rank)
+
+
+def _is_same_suit(cards: List[Card]) -> bool:
+    head = cards[0]
+    tail = cards[1:]
+    return all(head.suit == card.suit for card in tail)
+
+
+def _is_straight(cards: List[Card]) -> bool:
     cards = cards[:]
-    cards.sort(key=lambda c: (c.suit, c.rank))
 
-    suits = [list(v) for _, v in groupby(cards, key=lambda c: c.suit)]
-    suit_dict = {
-        len(suit) : suit for suit in suits
+    if cards[-1].rank == Rank.ace:
+        cards = [0] + cards
+
+    for i in range(0, 4):
+        card_slice = cards[i + 5 : i : -1]
+        if all(x - y == 1 for x, y in zip(card_slice, card_slice[1:])):
+            return True
+
+    return False
+
+
+def evaluate(user_cards: List[Card], community_cards: List[Card]) -> Tuple[MadeHands, int]:
+    cards = (user_cards + community_cards).sort(key=lambda card: (card.rank, card.suit))
+
+    rank_grouped_cards = [list(v) for _, v in groupby(cards, key=lambda c: c.rank)]
+    rank_grouped_cards = {
+        k : chain.from_iterable(list(v)).sort(key=lambda card: card.rank)
+        for k, v in groupby(rank_grouped_cards, key=lambda cs: len(cs.values()))
     }
-    longest_suit = suit_dict[max(suit_dict)][2:]
 
-    if (len(longest_suit) == FLUSH_LENGTH_THRESHOLD):
-        suit = longest_suit[0].suit
-        suits = list(map(lambda x: x.rank, longest_suit))
-        max_rank = Rank.ace if (longest_suit[0].rank == Rank.ace) else longest_suit[4].rank
-        if (suits == ROYALE_STRAIGHT_FLUSH_RANKS):
-            return (MadeHands.royale_straight_flush, max_rank, suit)
-        elif (suits == BACK_STRAIGHT_FLUSH_RANKS):
-            return (MadeHands.back_straight_flush, max_rank, suit)
-        elif (all(y - x == 1 for x, y in zip(suits, suits[1:]))):
-            return (MadeHands.straight_flush, suit, max_rank)
-        else:
-            return (MadeHands.flush, suit, max_rank)
+    suit_grouped_cards = [
+        list(v).sort(key=lambda card: card.rank)
+        for _, v in groupby(cards, key=lambda c: c.suit)
+    ]
+    suit_grouped_cards = {
+        len(suit) : suit for suit in suit_grouped_cards
+    }
+    rsfcs = cards[2:]
+
+    if map(lambda c: c.rank, rsfcs) == STRAIGHT_FLUSH_RANKS and _is_same_suit(rsfcs):
+        return (
+            MadeHands.royal_flush,
+            rsfcs[-1].suit
+        )
+    elif suit_grouped_cards[5] and _is_straight(suit_grouped_cards[5]):
+        return (
+            MadeHands.straight_flush,
+            suit_grouped_cards[5][-1].rank
+        )
+    elif rank_grouped_cards[4]:
+        return (
+            MadeHands.four_of_a_kind,
+            rank_grouped_cards[4][-1].rank
+        )
+    elif rank_grouped_cards[2] and rank_grouped_cards[3]:
+        return (
+            MadeHands.full_house,
+            rank_grouped_cards[3][-1].rank
+        )
+    elif _is_same_suit(suit_grouped_cards[5]):
+        return (
+            MadeHands.flush,
+            suit_grouped_cards[-1].rank
+        )
+    elif _is_straight(cards):
+        return (
+            MadeHands.straight,
+            Rank.ace if (cards[0].rank == Rank.ace) else cards[-1].rank
+        )
+    elif rank_grouped_cards[3]:
+        return (MadeHands.three_of_kind, rank_grouped_cards[3][-1].rank)
+    elif len(rank_grouped_cards[2]) == 4:
+        return (MadeHands.two_pairs, rank_grouped_cards[2][-1].rank)
+    elif rank_grouped_cards[2]:
+        return (MadeHands.pair, rank_grouped_cards[2][-1].rank)
     else:
-        pass # TODO
+        return (MadeHands.high_card, _get_high_card_weight(user_cards))
