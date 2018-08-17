@@ -1,4 +1,4 @@
-<h1 align="center">Pycon 2018 X Banksalad Holdem</h1>
+<h1 align="center">Pycon 2018 x Banksalad Holdem</h1>
 
 <p align="center">
   <img src="./resources/banksalad-holdem.png" alt="banksalad-hold'em" width="256px" />
@@ -16,8 +16,16 @@
 
 ## Prize
 
+<p align="center">
+  <img src="./resources/ipad-pro.png" alt="ipad" width="384px" />
+</p>
 <h3 align="center">1등 / iPad Pro 10.5"</h3>
+
+<p align="center">
+  <img src="./resources/airpods.png" alt="ipad" width="256px" />
+</p>
 <p align="center">2등 / AirPods</p>
+
 <p align="center">3등 / Starbucks 상품권</p>
 
 ## Submission
@@ -30,16 +38,17 @@
 
 ### 게임의 진행
 
-- 게임의 진행은 일반적인 텍사스 홀덤과 비슷합니다.
-- 뱅크샐러드 홀덤에서는 라운드마다 무작위로 선정된 플레이어부터 게임을 시작하게 됩니다.
+> 게임의 진행은 일반적인 텍사스 홀덤과 비슷합니다.
+>
+> 뱅크샐러드 홀덤에서는 라운드마다 무작위로 선정된 플레이어부터 게임을 시작하게 됩니다.
+>
+> 모든 사용자가 접을 경우 판돈은 사라집니다.
 
 1. 게임에 참여한 플레이어는 2장의 카드를 받고 베팅을 합니다.
 2. 3장의 커뮤니티 카드가 오픈되고 베팅을 합니다.
 3. 1장의 턴 카드가 오픈되고 베팅을 합니다.
 4. 1장의 리버 카드가 오픈되고 베팅을 합니다.
 5. 남은 플레이어가 공통으로 오픈된 5장의 카드와 손 패를 비교하여 순위를 매깁니다.
-
-- 모든 사용자가 접을 경우 판돈은 사라집니다.
 
 ### 용어
 
