@@ -38,12 +38,12 @@ def main(players: List[MetaPlayer]):
         ) for p in players
     ]
 
-    t = 0
+    t = 1
     while len(players) > MIN_NR_OF_WINNERS and t < MAX_NR_OF_TURNS:
         players = [p for p in players if p.chips > 0]
         random.shuffle(players)
 
-        players = run(players)
+        players = run(t, players)
         t += 1
 
     # TODO: ON GAME FINISHED
@@ -51,11 +51,12 @@ def main(players: List[MetaPlayer]):
         print(p.meta.name)
 
 
-def run(players: List[Player]) -> List[Player]:
+def run(t: int, players: List[Player]) -> List[Player]:
     deck = init()
     deck = shuffle(deck)
 
     initial_game = Game(
+        t,
         deck,
         [
             ActivePlayer(
@@ -76,7 +77,7 @@ def run(players: List[Player]) -> List[Player]:
             if curr == GameState.flop:
                 d = flop(g.deck)
 
-                g = Game(d, g.players, g.acc_chips); log(g)
+                g = Game(g.round, d, g.players, g.acc_chips); log(g)
                 return _run(g, process[1:])
             elif curr == GameState.bet:
                 g = players_bet(g); log(g)
@@ -151,7 +152,7 @@ def players_draw(g: Game) -> Game:
             return d, acc
 
     deck, players = _draw(g.deck, g.players, [])
-    return Game(deck, players, g.acc_chips)
+    return Game(g.round, deck, players, g.acc_chips)
 
 
 def players_bet(g: Game) -> Game:
@@ -306,6 +307,7 @@ def players_bet(g: Game) -> Game:
     )
 
     return Game(
+        g.round,
         g.deck,
         bet_players,
         g.acc_chips + sum(p.status.bet_amt for p in bet_players)
