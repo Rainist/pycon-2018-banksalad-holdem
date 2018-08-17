@@ -41,11 +41,11 @@ def evaluate(cards: List[Card]) -> Tuple[MadeHands, Rank, Suit]:
     if (len(longest_suit) == FLUSH_LENGTH_THRESHOLD):
         suit = longest_suit[0].suit
         suits = list(map(lambda x: x.rank, longest_suit))
-        max_rank = longest_suit[4].rank
+        max_rank = Rank.ace if (longest_suit[0].rank == Rank.ace) else longest_suit[4].rank
         if (suits == ROYALE_STRAIGHT_FLUSH_RANKS):
-            return (MadeHands.royale_straight_flush, Rank.ace, suit)
+            return (MadeHands.royale_straight_flush, max_rank, suit)
         elif (suits == BACK_STRAIGHT_FLUSH_RANKS):
-            return (MadeHands.back_straight_flush, Rank.ace, suit)
+            return (MadeHands.back_straight_flush, max_rank, suit)
         elif (all(y - x == 1 for x, y in zip(suits, suits[1:]))):
             return (MadeHands.straight_flush, suit, max_rank)
         else:
