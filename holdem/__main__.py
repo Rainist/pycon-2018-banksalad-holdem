@@ -345,10 +345,14 @@ def players_bet(g: Game) -> Game:
         []
     )
 
+    player_names = [p.player.meta.name for p in g.players]
     return Game(
         g.round,
         g.deck,
-        bet_players,
+        sorted(
+            bet_players,
+            key=lambda p: player_names.index(p.player.meta.name)
+        ),
         g.acc_chips + sum(p.status.bet_amt for p in bet_players),
         any(p.player.chips == 0 for p in bet_players)
     )
