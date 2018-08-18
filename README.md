@@ -32,7 +32,7 @@
 ```python
 def bet(
     my_chips: int, # 남은 칩 수
-    my_cards: List[Card], # 플래이어의 손 패 (2장)
+    my_cards: List[Card], # 플레이어의 손 패 (2장)
     bet_players: List[Other], # 이번 턴에 베팅한 플레이어들
     betting_players: List[Other], # 아직 베팅하지 않은 플레이어들
     community_cards: List[Card], # 커뮤니티 카드 + 턴 카드 + 리버 카드 (3장 ~ 5장)
