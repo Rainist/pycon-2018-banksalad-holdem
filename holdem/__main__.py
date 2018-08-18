@@ -264,7 +264,7 @@ def players_bet(g: Game) -> Game:
                                 ),
                                 PlayerGameStatus(
                                     p.status.cards,
-                                    bet_amt,
+                                    p.status.bet_amt + bet_amt,
                                     p.status.died
                                 )
                             )
