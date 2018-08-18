@@ -93,7 +93,7 @@ def run(t: int, players: List[Player]) -> List[Player]:
                             PlayerGameStatus(
                                 p.status.cards,
                                 0,
-                                False
+                                p.status.died
                             )
                         ) for p in g.players
                     ],
