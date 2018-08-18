@@ -43,7 +43,7 @@ def main(players: List[MetaPlayer]):
     ]
 
     t = 1
-    while len(players) > MIN_NR_OF_WINNERS and t < MAX_NR_OF_TURNS:
+    while len(players) > MIN_NR_OF_WINNERS and t <= MAX_NR_OF_TURNS:
         players = [Player(p.meta, p.chips - RAKE) for p in players]
         players = run(t, players)
         t += 1
