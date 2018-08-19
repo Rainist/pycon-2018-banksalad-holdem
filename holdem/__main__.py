@@ -3,7 +3,7 @@ import random
 from operator import itemgetter
 from typing import List, Tuple
 
-from .logger import error, log
+from .logger import error, log, on_finish
 from .player import Other
 from .timeout import Timeout
 from .core.deck import Deck, draw, flop, init, shuffle
@@ -51,6 +51,16 @@ def main(players: List[MetaPlayer]):
         players = [p for p in players if p.chips > RAKE]
         random.shuffle(players)
 
+    log(
+        Game(
+            t,
+            init(),
+            [ActivePlayer(p, PlayerGameStatus([], 0, False)) for p in players],
+            0,
+            False
+        )
+    )
+
     # TODO: ON GAME FINISHED
     sorted_players = sorted(players, key=get_chip, reverse=True)
     for p in sorted_players:
@@ -75,7 +85,7 @@ def run(t: int, players: List[Player]) -> List[Player]:
     )
 
     game = players_draw(initial_game)
-    game = players_draw(game); log(game)
+    game = players_draw(game)
 
     def _run(g: Game, process: List[GameState]) -> List[Player]:
         if process:
@@ -106,7 +116,7 @@ def run(t: int, players: List[Player]) -> List[Player]:
                 if g.all_in:
                     return _run(g, process[1:])
 
-                g = players_bet(g); log(g)
+                g = players_bet(g)
                 left_players = [p for p in g.players if not p.status.died]
                 if not left_players:
                     return [p.player for p in g.players]
@@ -189,13 +199,29 @@ def players_draw(g: Game) -> Game:
 
 def players_bet(g: Game) -> Game:
 
+    player_names = [p.player.meta.name for p in g.players]
+
     def _bet(
         last_bet_amt: int, ps: List[ActivePlayer], acc: List[ActivePlayer]
     ) -> List[ActivePlayer]:
+
         if ps:
             p = ps[0]
             if p.status.died:
                 return _bet(last_bet_amt, ps[1:], acc + [p])
+
+            log(
+                Game(
+                    g.round,
+                    g.deck,
+                    sorted(
+                        ps + acc,
+                        key=lambda x: player_names.index(x.player.meta.name)
+                    ),
+                    g.acc_chips + sum(p.status.bet_amt for p in ps + acc),
+                    g.all_in
+                )
+            )
 
             min_bet_amt = max(last_bet_amt, MIN_BET_AMT) - p.status.bet_amt
             max_bet_amt = max(
@@ -328,6 +354,19 @@ def players_bet(g: Game) -> Game:
                     ]
                 )
         else:
+            log(
+                Game(
+                    g.round,
+                    g.deck,
+                    sorted(
+                        ps + acc,
+                        key=lambda x: player_names.index(x.player.meta.name)
+                    ),
+                    g.acc_chips + sum(p.status.bet_amt for p in ps + acc),
+                    g.all_in
+                )
+            )
+
             return acc
 
     bet_players = _bet(
@@ -345,7 +384,6 @@ def players_bet(g: Game) -> Game:
         []
     )
 
-    player_names = [p.player.meta.name for p in g.players]
     return Game(
         g.round,
         g.deck,
@@ -385,3 +423,5 @@ if __name__ == '__main__':
             )
         ]
     )
+
+    on_finish()

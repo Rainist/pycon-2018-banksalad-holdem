@@ -1,12 +1,16 @@
 import json
 import logging
+import os
 
 from .core.cards import Card
 from .core.game import Game
 
 
+LOG_FILE_NAME = 'play.log'
+
+
 logging.basicConfig(
-    filename='play.log',
+    filename=LOG_FILE_NAME,
     filemode='w',
     level=logging.INFO
 )
@@ -39,3 +43,15 @@ def log(g: Game):
 
 def error(msg: str):
     logging.error(msg)
+
+
+def on_finish():
+    fpath = os.path.join(os.getcwd(), LOG_FILE_NAME)
+    with open(fpath, 'r') as f:
+        lines = f.readlines()
+
+    with open(fpath, 'w') as f:
+        for idx, l in enumerate(lines):
+            if idx > 0 and lines[idx - 1] == l:
+                continue
+            f.write(l)
